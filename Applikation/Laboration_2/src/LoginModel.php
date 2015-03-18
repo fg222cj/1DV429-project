@@ -4,19 +4,21 @@
 //Får användaren logga in?
 //Vem är inloggad?
 
-require_once("src/connectionSettings.php");
+require_once("src/UserRepository.php");
+require_once("src/Exceptions.php");
 
 class LoginModel {
 	private $loggedIn = "loggedIn";
 	private $browser = "browser";
 	private $username = "";
+	private $userRepository;
 	protected $dbConnection;
 	protected $dbTable = "user";
 	private static $sUsername = "username";
 	private static $sPassword = "password";
 	
 	public function __construct(){
-		
+		$this->userRepository = new UserRepository();
 	}
 	
 	// Returnerar true om användaren redan är inloggad
@@ -57,7 +59,7 @@ class LoginModel {
 		$linesArr = array();
 		//$fh = fopen("src/users.txt", "r");
 		
-		
+		// ta bort nedan och kör $userRepository->authenticateUser($username, $password) istället. try och catch för att fånga authenticationexception
 
 		$db = $this->connection();
 		$checkIfUsernameExists = "SELECT * from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $username . "' AND " . self::$sPassword . "='" . $password . "';";

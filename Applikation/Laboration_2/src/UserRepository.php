@@ -41,7 +41,7 @@ class UserRepository extends Repository {
 		try {
 			$db = $this -> connection();
 		
-			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$name . " = ?";
+			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$username . " = ?";
 			$params = array($userId);
 	
 			$query = $db -> prepare($sql);
@@ -86,6 +86,32 @@ class UserRepository extends Repository {
 		
 		catch(PDOException $e) {
 			throw new DatabaseException('USER_FETCH');
+		}
+	}
+	
+	public function authenticateUser($username, $password) {
+		try {
+			$db = $this -> connection();
+		
+			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$username . " = ? AND "  . self::$password . " = ?";
+			$params = array($username, $password);
+	
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+	
+			if($result = $query -> fetch()) {
+				$user = new User($result[self::$id], $result[self::$username], $result[self::$password], $result[self::$role]);
+				return $user;
+			}
+			
+			else {
+				throw new AuthenticationException();
+			}
+			
+		}
+		
+		catch(PDOException $e) {
+			throw new DatabaseException('USER_AUTH');
 		}
 	}
 	
