@@ -1,5 +1,7 @@
 <?php
 
+require_once("ValidationException.php");
+
 class Validation{
 		// Checks if variable is of type string.
 		private function validateString($var){
