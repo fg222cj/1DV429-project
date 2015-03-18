@@ -53,16 +53,22 @@ class LoginView {
 	    
 	    $this->dateTime = $this->getTime();
 	    $ret = "
-	    <a href='/Laboration_2'>Tillbaka</a>
-	    <h2>Ej inloggad, registrerar användare</h2>
+	    <a href='?'>Back</a>
+	    <h2>Register user</h2>
 	    <form method='post'>
 		<fieldset>
-		<legend>Registrera ny användare - Skriv in användarnamn och lösenord</legend>
+		<legend>Register new user - Type username and password</legend>
 		$this->msg
-		Namn: <input type='text' name='regUsername' id='username' value='$this->username'><br>
-		Lösenord: <input type='password' name='regPassword'><br>Repetera lösenord: 
-		<input type='password' name='repeatedRegPassword'><br>Skicka: 
-		<input type='submit' name='regSubmit' value='Registrera'>
+		Username: 
+		<input type='text' name='regUsername' id='username' value='$this->username'>
+		<br>
+		Password: 
+		<input type='password' name='regPassword'>
+		<br>
+		Repeat password: 
+		<input type='password' name='repeatedRegPassword'>
+		<br> 
+		<input type='submit' name='regSubmit' value='Register'>
 		</fieldset>
 		</form>
 		<p>$this->dateTime</p>
