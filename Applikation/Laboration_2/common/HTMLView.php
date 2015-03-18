@@ -9,11 +9,15 @@ class HTMLView {
 		
 		echo "
 			<!DOCTYPE html>
-			<meta charset='UTF-8'>
-			<title>IT-Security</title>
+			<head>
+				<meta charset='UTF-8'>
+				<title>IT-Security</title>
+				<link rel='stylesheet' type='text/css' href='css/foundation.css'>
+			</head>
 			<body>
-				<h1>IT-Security 1DV429</h1>
-				$body
+				<div class='large-5 columns'>
+					$body
+				</div>
 			</body>
 		";
 	}

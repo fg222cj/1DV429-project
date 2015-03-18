@@ -28,19 +28,18 @@ class LoginView {
 		
 		$this->dateTime = $this->getTime();
 		$ret = "
-		<a href='?register'>Register new user</a>
-		<form method='post'>
-		<fieldset>
-		<legend>Login - Type username and password</legend>
-		$this->msg
-		Username: <input type='text' name='username' id='username' value='$this->username'>
-		Password: <input type='password' name='password'>
-		<br>
-		<input type='submit' name='submit' value='Log in'>
-		</fieldset>
-		</form>
-		<p>$this->dateTime</p>";
-		
+			<h1>IT-Security 1DV429</h1>
+			<a href='?register'>Register new user</a>
+			<form method='post'>
+			<fieldset>
+			<legend>Login - Type username and password</legend>
+			$this->msg
+			Username: <input type='text' name='username' id='username' value='$this->username'>
+			Password: <input type='password' name='password'>
+			<input type='submit' class='small button' name='submit' value='Log in'>
+			</fieldset>
+			</form>
+			<p>$this->dateTime</p>";
 		return $ret;
 	}
 	
@@ -68,7 +67,7 @@ class LoginView {
 		Repeat password: 
 		<input type='password' name='repeatedRegPassword'>
 		<br> 
-		<input type='submit' name='regSubmit' value='Register'>
+		<input type='submit' class='small button' name='regSubmit' value='Register'>
 		</fieldset>
 		</form>
 		<p>$this->dateTime</p>
@@ -84,7 +83,7 @@ class LoginView {
 		
 		$ret = "<h2>Welcome " .$username." </h2>$this->msg
 		<form method='post'>
-		<input type='submit' value='Log out' name='logOut'/>
+		<input type='submit' class='small button' value='Log out' name='logOut'/>
 		</form>
 		<p>$this->dateTime</p>";
 		return $ret;
