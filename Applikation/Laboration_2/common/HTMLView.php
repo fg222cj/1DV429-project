@@ -10,9 +10,9 @@ class HTMLView {
 		echo "
 			<!DOCTYPE html>
 			<meta charset='UTF-8'>
-			<title>as223jx</title>
+			<title>IT-Security</title>
 			<body>
-				<h1>Laborationskod as223jx</h1>
+				<h1>IT-Security 1DV429</h1>
 				$body
 			</body>
 		";

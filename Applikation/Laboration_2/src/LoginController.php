@@ -21,7 +21,6 @@ class LoginController {
 			
 		// Om användaren vill logga ut
 		if($this->view->userPressedLogOut()){
-			$this->view->logOut();
             $this->model->destroySession();
 			return $this->view->showLoginForm();
 		}
@@ -31,22 +30,6 @@ class LoginController {
 			$this->username = $this->model->getLoggedInUser();
 			return $this->view->showLoggedIn($this->username);
         }
-		
-		// Kollar om kakor finns
-        if($this->view->checkIfCookiesExist()){
-            // Testar logga in med kakorna
-            if($this->model->login($this->view->getUsernameCookie(), $this->view->getPasswordCookie()) && !$this->view->checkIfCookieExpired()){
-                $this->username = $this->model->getLoggedInUser();
-                $this->view->cookieLoginMsg();
-                return $this->view->showLoggedIn($this->username);
-            }
-            // Om det är fel information i kakorna tas dom bort och ett meddelande visas
-            else{
-                $this->view->logOut();
-                $this->model->destroySession();
-                $this->view->failedCookieLoginMsg();
-            }
-		}
 
 		// Om användaren vill logga in
 		if($this->view->userPressedLogin()){
@@ -62,11 +45,6 @@ class LoginController {
 				if($this->model->login($this->username, $this->password)){
 					// Meddelande om att inloggningen lyckades
 					$this->view->loginSuccess();
-					// Sätter cookies om användaren valt att bli ihågkommen
-					if($this->view->rememberMe()){
-						$this->view->setCookie();
-					}
-					//$this->view->storeCookies();
 					return $this->view->showLoggedIn($this->username);
 				}	
 				
@@ -98,9 +76,6 @@ class LoginController {
 						$this->view->registerMsg(false);
 					}
     		    }
-				// else{
-					// $this->view->updateUsername($this->username);
-				// }
 		    }
 			return $this->view->showRegisterForm();
 		}

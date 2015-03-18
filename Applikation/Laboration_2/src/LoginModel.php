@@ -38,8 +38,8 @@ class LoginModel {
 	
 	// Förstör sessionen
 	public function destroySession(){
-            session_unset();
-            session_destroy();
+		session_unset();
+        session_destroy();
 	}
 	
 	//Hämtar användarnamnet på personen inloggad i sessionen
@@ -55,8 +55,9 @@ class LoginModel {
 		$_SESSION["password"] = $password;
 
 		$linesArr = array();
-		$fh = fopen("src/users.txt", "r");
-
+		//$fh = fopen("src/users.txt", "r");
+		
+		
 
 		$db = $this->connection();
 		$checkIfUsernameExists = "SELECT * from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $username . "' AND " . self::$sPassword . "='" . $password . "';";
