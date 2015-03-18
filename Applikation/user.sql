@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.4
+-- version 3.4.3.2
 -- http://www.phpmyadmin.net
 --
--- Värd: 127.0.0.1
--- Tid vid skapande: 16 okt 2014 kl 23:56
--- Serverversion: 5.6.15-log
--- PHP-version: 5.5.8
+-- Host: 127.0.0.1
+-- Generation Time: Mar 18, 2015 at 03:31 PM
+-- Server version: 5.5.15
+-- PHP Version: 5.3.7
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -17,29 +17,30 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Databas: `projekt`
+-- Database: `user`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
   `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
   `username` varchar(30) COLLATE utf8_swedish_ci NOT NULL,
   `password` varchar(50) COLLATE utf8_swedish_ci NOT NULL,
+  `role` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci AUTO_INCREMENT=4 ;
 
 --
--- Dumpning av Data i tabell `user`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`ID`, `username`, `password`) VALUES
-(1, 'Admin', 'Password'),
-(3, 'Admin', 'dc647eb65e6711e155375218212b3964');
+INSERT INTO `user` (`ID`, `username`, `password`, `role`) VALUES
+(1, 'Admin', 'Password', 1),
+(3, 'Admin', 'dc647eb65e6711e155375218212b3964', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
