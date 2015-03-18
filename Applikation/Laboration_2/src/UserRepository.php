@@ -7,6 +7,7 @@ class UserRepository extends Repository {
 	private static $id = 'ID';
 	private static $username = 'username';
 	private static $password = 'password';
+	private static $role = 'role';
 	
 	private static $dbTable = 'user';
 	
@@ -24,7 +25,7 @@ class UserRepository extends Repository {
 	
 			$result = $query -> fetch();
 			
-			$user = new User($result[self::$id], $result[self::$username], $result[self::$password]);
+			$user = new User($result[self::$id], $result[self::$username], $result[self::$password], $result[self::$role]);
 				
 			return $user;
 		}
@@ -48,7 +49,7 @@ class UserRepository extends Repository {
 	
 			$result = $query -> fetch();
 			
-			$user = new User($result[self::$id], $result[self::$username], $result[self::$password]);
+			$user = new User($result[self::$id], $result[self::$username], $result[self::$password], $result[self::$role]);
 				
 			return $user;
 		}
@@ -76,7 +77,7 @@ class UserRepository extends Repository {
 			
 			foreach($result as $row)
 			{
-				$user = new User($row[self::$id], $row[self::$username], $result[self::$password]);
+				$user = new User($row[self::$id], $row[self::$username], $result[self::$password], $result[self::$role]);
 				$users[] = $user;
 			}
 				
@@ -93,7 +94,7 @@ class UserRepository extends Repository {
 		{
 			$db = $this -> connection();
 
-			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$username . ", " . self::$password . ") VALUES (?, ?)";
+			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$username . ", " . self::$password . ", " . self::$role . ") VALUES (?, ?, ?)";
 			$params = array($user -> getUsername(), $user -> getPassword());
 
 			$query = $db -> prepare($sql);
