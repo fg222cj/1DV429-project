@@ -10,7 +10,6 @@ class LoginView {
 	private $userArr = array();
 	private $rememberValue;
 	private $msg = "";
-	private $dateTime;
 
 	public function __construct(LoginModel $model){
 		$this->model = $model;
@@ -26,7 +25,6 @@ class LoginView {
             $this->username = $_POST["username"];
 		}
 		
-		$this->dateTime = $this->getTime();
 		$ret = "
 			<h1>IT-Security 1DV429</h1>
 			<a href='?register'>Register new user</a>
@@ -38,8 +36,7 @@ class LoginView {
 			Password: <input type='password' name='password'>
 			<input type='submit' class='small button' name='submit' value='Log in'>
 			</fieldset>
-			</form>
-			<p>$this->dateTime</p>";
+			</form>";
 		return $ret;
 	}
 	
@@ -50,7 +47,6 @@ class LoginView {
 	        $this->username = $_POST["regUsername"];
 	    }
 	    
-	    $this->dateTime = $this->getTime();
 	    $ret = "
 	    <a href='?'>Back</a>
 	    <h2>Register user</h2>
@@ -60,18 +56,13 @@ class LoginView {
 		$this->msg
 		Username: 
 		<input type='text' name='regUsername' id='username' value='$this->username'>
-		<br>
 		Password: 
 		<input type='password' name='regPassword'>
-		<br>
 		Repeat password: 
-		<input type='password' name='repeatedRegPassword'>
-		<br> 
+		<input type='password' name='repeatedRegPassword'> 
 		<input type='submit' class='small button' name='regSubmit' value='Register'>
 		</fieldset>
-		</form>
-		<p>$this->dateTime</p>
-	    ";
+		</form>";
 	    
 	    return $ret;
 	}
@@ -84,24 +75,8 @@ class LoginView {
 		$ret = "<h2>Welcome " .$username." </h2>$this->msg
 		<form method='post'>
 		<input type='submit' class='small button' value='Log out' name='logOut'/>
-		</form>
-		<p>$this->dateTime</p>";
+		</form>";
 		return $ret;
-	}
-	
-	// Hämtar ut dag, tid osv och returnerar som en sträng
-	public function getTime(){
-		setlocale(LC_TIME, "swedish");
-		date_default_timezone_set('Europe/Stockholm');
-		$weekDay = ucfirst(utf8_encode(strftime('%A')));
-		$date = strftime('%d');
-		$month = ucfirst(strftime("%B"));
-		$year = strftime("%Y");
-		$time = strftime("%H:%M:%S");
-
-		$this->dateTime = $weekDay . ", den " . $date . " " . $month . " år " . $year . ". Klockan är [" . $time . "]";
-		
-		return $this->dateTime;	
 	}
 	
 	// Kollar så användaren matat in något i båda fälten
