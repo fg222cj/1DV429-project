@@ -79,7 +79,7 @@ class UserRepository extends Repository {
 			
 			foreach($result as $row)
 			{
-				$user = new User($row[self::$id], $row[self::$username], $result[self::$password], $result[self::$role]);
+				$user = new User($row[self::$id], $row[self::$username], $row[self::$password], $row[self::$role]);
 				$users[] = $user;
 			}
 				
