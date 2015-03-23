@@ -2,14 +2,15 @@
 
 class ProfileView {
 	private $model;
+	private $msg = "";
 
 	public function __construct(ProfileModel $model){
 		$this->model = $model;
 	}
 
 	
-	public function showProfile($username){
-		$ret = "<h2>" .$username."'s profile</h2>
+	public function showProfile(){
+		$ret = "<h2>'s profile</h2>
 		<form method='post'>
 		<input type='submit' name='editAccountSettings' value='Edit account settings'/>
 		</form>
@@ -23,7 +24,7 @@ class ProfileView {
 	
 	public function showEditAccountSettingsForm(){
 	    $ret = "
-	    <a href='?>Back</a>
+	    <a href='?'>Back</a>
 	    <h2>Edit account settings</h2>
 	    <form method='post'>
 		<fieldset>

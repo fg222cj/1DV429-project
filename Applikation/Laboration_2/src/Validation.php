@@ -1,6 +1,6 @@
 <?php
 
-require_once("ValidationException.php");
+require_once("src/Exceptions.php");
 
 class Validation{
 		// ----- CREDENTIALS VALIDATIONS -----

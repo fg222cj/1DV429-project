@@ -2,7 +2,7 @@
 
 require_once('src/NavigationView.php');
 require_once('src/LoginController.php');
-//require_once('src/ProfileController.php');
+require_once('src/ProfileController.php');
 require_once('src/AdminController.php');
 
 class NavigationController
@@ -15,14 +15,14 @@ class NavigationController
 		{
 			switch (NavigationView::getAction())
 			{
-				/*
+				
 				case NavigationView::$actionProfile:
 					
 					$controller = new ProfileController();
 					$result = $controller->doControll();
 					return $result;
 					break;
-					*/
+					
 				
 				case NavigationView::$actionAdmin:
 					
