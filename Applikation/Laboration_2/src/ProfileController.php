@@ -60,6 +60,9 @@ class ProfileController {
 						
 					case "NEW_PASSWORDS_NOT_MATCHING":
 						$this->view->setMessage("The new passwords are not matching!");
+						
+					case "INVALID_PASSWORD":
+						$this->view->setMessage("Wrong password!");
 				}
 			}
 			// Save new password and show success message.

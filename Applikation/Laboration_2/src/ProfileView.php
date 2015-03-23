@@ -29,7 +29,7 @@ class ProfileView {
 	    <form method='post'>
 		<fieldset>
 		<legend>Change password</legend>
-		<ul>$this->msg</ul>
+		<ul style='color:#FF0000'>$this->msg</ul>
 		Old password: <input type='password' name='oldPassword'><br>
 		New password: <input type='password' name='newPassword'><br>Repeat new password: 
 		<input type='password' name='repeatedNewPassword'><br>Skicka: 

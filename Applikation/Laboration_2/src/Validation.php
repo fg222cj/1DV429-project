@@ -1,8 +1,14 @@
 <?php
 
 require_once("src/Exceptions.php");
+require_once("src/UserRepository.php");
 
 class Validation{
+		private $userRepository;
+		
+		public function __construct(){
+			$this->userRepository = new UserRepository();
+		}
 		// ----- CREDENTIALS VALIDATIONS -----
 		
 		// Checks if variable is of type string.
@@ -47,11 +53,6 @@ class Validation{
 			}
 		}
 		
-		// Checks if the password is correct.
-		public function validatePassword(){
-			// TODO: Kolla så lösenordet är rätt!
-		}
-		
 		// ----- FORUM VALIDATIONS -----
 		
 		// Checks post title length.
@@ -68,5 +69,18 @@ class Validation{
 			}
 		}
 	
+		public function verifyPassword($password){
+		
+		try {
+			$user = $this->userRepository->authenticateUser($_SESSION['username'], $password);
+			if(isset($user)) {
+				return true;
+			}
+		}
+		catch(AuthenticationException $e) {
+			throw new ValidationException("INVALID_PASSWORD");
+		}
+		
+	}
 }
 ?>
