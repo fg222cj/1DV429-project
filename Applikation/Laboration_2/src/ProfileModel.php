@@ -1,6 +1,6 @@
 <?php
 
-class LoginModel {
+class ProfileModel {
 	
 	public function __construct(){
 		
