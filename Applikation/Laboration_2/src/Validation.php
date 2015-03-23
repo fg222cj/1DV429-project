@@ -51,5 +51,17 @@ class Validation{
 				throw new ValidationException("POST_BAD_CHARACTERS");
 			}
 		}
+		
+		// Checks if new passwords match.
+		private function compareNewPasswordInputs($newPasswordFirstInput, $newPasswordSecondInput){
+			if($newPasswordFirstInput == $newPasswordSecondInput){
+				throw new ValidationException("NEW_PASSWORDS_NOT_MATCHING");
+			}
+		}
+		
+		// Checks if the password is correct.
+		private function validatePassword(){
+			// TODO: Kolla så lösenordet är rätt!
+		}
 }
 ?>

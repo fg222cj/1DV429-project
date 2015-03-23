@@ -1,6 +1,6 @@
 <?php
 
-class LoginView {
+class ProfileView {
 	private $model;
 
 	public function __construct(ProfileModel $model){
@@ -15,6 +15,10 @@ class LoginView {
 		</form>
 		";
 		return $ret;
+	}
+	
+	public function setMessage($message){
+		$this->msg .= "<ul><li>" . $message . "</li></ul>";
 	}
 	
 	public function showEditAccountSettingsForm(){
@@ -34,13 +38,6 @@ class LoginView {
 	    ";
 	    
 	    return $ret;
-	}
-	
-	public function compareNewPasswordInputs($newPasswordFirstInput, $newPasswordSecondInput){
-		if($newPasswordFirstInput == $newPasswordSecondInput){
-			return true;
-		}
-		return false;
 	}
 	
 	public function userPressedEditAccountSettings(){

@@ -4,7 +4,7 @@ require_once("src/ProfileModel.php");
 require_once("src/ProfileView.php");
 require_once("src/Validation.php");
 
-class LoginController {
+class ProfileController {
 	private $view;
 	private $model;
 	private $validation;
@@ -19,33 +19,42 @@ class LoginController {
 	}
 	
 	public function doControll(){
+		// Check if user wants to edit their account settings.
 		if($this->view->userPressedEditAccountSettings()){
 			return $this->view->showEditAccountSettingsForm();
 		}
 		
+		// Check if user wants to save their account settings changes.
 		if($this->view->userPressedSubmitAccountSettings()){
 			// Retrieve inputs from input fields.
 			$this->oldPasswordInput = $this->view->getOldPasswordInput();
 			$this->newPasswordFirstInput = $this->view->getNewPasswordFirstInput();
 			$this->newPasswordSecondInput = $this->view->getNewPasswordSecondInput();
 			
-			$this->validation->validateString($this->oldPasswordInput);
-			$this->validation->validateString($this->newPasswordFirstInput);
-			$this->validation->validatePasswordLength($this->newPasswordFirstInput);
-			$this->validation->validatePasswordSecurity($this->newPasswordFirstInput);
+			try{
+				$this->validation->validateString($this->oldPasswordInput);
+				$this->validation->validateString($this->newPasswordFirstInput);
 				
-			// Makes sure the old password is correct and that the two inputs for new password matches.
-			if($this->model->checkOldPassword && $this->view->compareNewPasswordInputs($this->newPasswordFirstInput, $this->newPasswordSecondInput)){
-				
-				// TODO: Spara nya lösenordet.
-				
-				return $this->view->showProfile();
+				$this->validation->validatePasswordLength($this->newPasswordFirstInput);
+				$this->validation->validatePasswordSecurity($this->newPasswordFirstInput);
+					
+				$this->validation->compareNewPasswordInputs($this->newPasswordFirstInput, $this->newPasswordSecondInput);
+				$this->validation->validatePassword($this->oldPasswordInput);
 			}
-			else{
-				// TODO: Felmeddelanden, stannar på samma sida & inget sparas.
+			catch(ValidationException $e){
+				switch ($e->getMessage()){
+					case "VARIABLE_NOT_STRING";
+						$this->view->setMessage("Invalid input!");
+				}
 			}
+			// Save new password and show success message.
+			// TODO: Spara nya lösenordet.
+			
+			$this->view->setMessage("New password was successully saved!");
+			return $this->view->showEditAccountSettingsForm();
 		}
 		
+		// Returns profile if nothing was clicked.
 		return $this->view->showProfile();
 	}
 }
