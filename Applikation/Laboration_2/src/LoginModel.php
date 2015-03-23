@@ -59,49 +59,68 @@ class LoginModel {
 		$linesArr = array();
 		//$fh = fopen("src/users.txt", "r");
 		
-		// ta bort nedan och kör $userRepository->authenticateUser($username, $password) istället. try och catch för att fånga authenticationexception
-
-		$db = $this->connection();
-		$checkIfUsernameExists = "SELECT * from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $username . "' AND " . self::$sPassword . "='" . $password . "';";
-		$userQuery = $db->prepare($checkIfUsernameExists);
-		$userQuery->execute();
-		$existingRow = $userQuery->fetch(PDO::FETCH_ASSOC);
-		if(!$existingRow){
+		
+		
+		try {
+			$user = $this->userRepository->authenticateUser($username, $password);
+			if(isset($user)) {
+				// Kanske göra något mer med user? Annars bara returnera true från auth-funktionen kanske.
+				$_SESSION[$this->loggedIn] = 1;
+		    	$_SESSION[$this->browser] = $_SERVER["HTTP_USER_AGENT"];
+				return true;
+			}
+		}
+		catch(AuthenticationException) {
 			return false;
 		}
-		else{
-			$_SESSION[$this->loggedIn] = 1;
-		    $_SESSION[$this->browser] = $_SERVER["HTTP_USER_AGENT"];
-			return true;
-		}
+		
+		// Ta bort detta när allt funkar.
+		
+		//$db = $this->connection();
+		//$checkIfUsernameExists = "SELECT * from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $username . "' AND " . self::$sPassword . "='" . $password . "';";
+		//$userQuery = $db->prepare($checkIfUsernameExists);
+		//$userQuery->execute();
+		//$existingRow = $userQuery->fetch(PDO::FETCH_ASSOC);
+		//if(!$existingRow){
+		//	return false;
+		//}
+		//else{
+		//	$_SESSION[$this->loggedIn] = 1;
+		//    $_SESSION[$this->browser] = $_SERVER["HTTP_USER_AGENT"];
+		//	return true;
+		//}
 	}
 	
 	public function addUser(User $user) {
 
 	try{
-		$db = $this->connection();
+		return $this->userRepository->addUser($user);
+		
+		// Ta bort nedan när det funkar att lägga till användare.
+		
+		//$db = $this->connection();
 	
 		// Kör en query där jag selectar alla användarnamn med värdet som användaren skrev in
-		$checkIfUsernameExists = "SELECT " . self::$sUsername . " from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $user->getUsername() . "';";
-		$userQuery = $db->prepare($checkIfUsernameExists);
-		$userQuery->execute();
-		$existingRow = $userQuery->fetch(PDO::FETCH_ASSOC);
+		//$checkIfUsernameExists = "SELECT " . self::$sUsername . " from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $user->getUsername() . "';";
+		//$userQuery = $db->prepare($checkIfUsernameExists);
+		//$userQuery->execute();
+		//$existingRow = $userQuery->fetch(PDO::FETCH_ASSOC);
 		
 		// Om inte queryn returnerar något så finns inte användarnamnet i databasen redan
-		if(!$existingRow){
-	    	$sql = "INSERT INTO $this->dbTable (" . self::$sUsername . ", " . self::$sPassword . ") VALUES (?, ?)";
+		//if(!$existingRow){
+	    //	$sql = "INSERT INTO $this->dbTable (" . self::$sUsername . ", " . self::$sPassword . ") VALUES (?, ?)";
 	
-			$params = array($user->getUsername(), $user->getPassword());
+		//	$params = array($user->getUsername(), $user->getPassword());
 	
-			$query = $db->prepare($sql);
+		//	$query = $db->prepare($sql);
 		
-			$query->execute($params);
-			return true;
+		//	$query->execute($params);
+		//	return true;
 		
-		}
-		else{
-			return false;
-		}
+		//}
+		//else{
+		//	return false;
+		//}
 
 		} catch (\Exception $e) {
 			echo $e;
@@ -110,14 +129,14 @@ class LoginModel {
 		
 	}
 	
-	protected function connection() {
-		if ($this->dbConnection == NULL)
-			$this->dbConnection = new \PDO(\dbSettings::$DB_CONNECTION, \dbSettings::$DB_USERNAME, \dbSettings::$DB_PASSWORD);
+	//protected function connection() {
+	//	if ($this->dbConnection == NULL)
+	//		$this->dbConnection = new \PDO(\dbSettings::$DB_CONNECTION, \dbSettings::$DB_USERNAME, \dbSettings::$DB_PASSWORD);
 		
-		$this->dbConnection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+	//	$this->dbConnection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		
-		return $this->dbConnection;
-	}
+	//	return $this->dbConnection;
+	//}
 	
 		// Kollar om det går att registrera
 	public function tryRegister($username, $password, $repeatedPassword){

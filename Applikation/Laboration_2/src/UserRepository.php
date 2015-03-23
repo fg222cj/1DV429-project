@@ -50,8 +50,10 @@ class UserRepository extends Repository {
 			$result = $query -> fetch();
 			
 			$user = new User($result[self::$id], $result[self::$username], $result[self::$password], $result[self::$role]);
-				
-			return $user;
+			if(isset($user)) {
+				return $user;
+			}
+			return false;
 		}
 		
 		catch(PDOException $e) {
@@ -120,14 +122,21 @@ class UserRepository extends Repository {
 		{
 			$db = $this -> connection();
 
-			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$username . ", " . self::$password . ", " . self::$role . ") VALUES (?, ?, ?)";
-			$params = array($user -> getUsername(), $user -> getPassword());
-
-			$query = $db -> prepare($sql);
-			$query -> execute($params);
+			if(!getUserByName($user->username)) {
 			
-			$userId = $db->lastInsertId();
-			
+				$sql = "INSERT INTO " . self::$dbTable . " (" . self::$username . ", " . self::$password . ", " . self::$role . ") VALUES (?, ?, ?)";
+				$params = array($user -> getUsername(), $user -> getPassword());
+	
+				$query = $db -> prepare($sql);
+				$query -> execute($params);
+				
+				$userId = $db->lastInsertId();
+				
+				return true;
+			}
+			else {
+				return false;
+			}
 			// Fetch the added user and return it. Remove these rows if we end up not needing them.
 			//$user = $this->getUserByID($userId);
 			//return $user;
