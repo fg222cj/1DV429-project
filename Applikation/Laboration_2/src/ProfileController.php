@@ -32,6 +32,7 @@ class ProfileController {
 			$this->newPasswordSecondInput = $this->view->getNewPasswordSecondInput();
 			
 			try{
+				
 				$this->validation->validateString($this->oldPasswordInput);
 				$this->validation->validateString($this->newPasswordFirstInput);
 				
@@ -39,30 +40,36 @@ class ProfileController {
 				$this->validation->validatePasswordSecurity($this->newPasswordFirstInput);
 					
 				$this->validation->compareNewPasswordInputs($this->newPasswordFirstInput, $this->newPasswordSecondInput);
-				$this->validation->validatePassword($this->oldPasswordInput);
+				$this->validation->verifyPassword($this->oldPasswordInput);
 			}
 			catch(ValidationException $e){
 				switch ($e->getMessage()){
 					case "VARIABLE_NOT_STRING":
 						$this->view->setMessage("Invalid input!");
+						break;
 						
 					case "PASSWORD_BAD_LENGTH":
 						$this->view->setMessage("Password needs to be in the range of 8-15 characters");
+						break;
 						
 					case "PASSWORD_NOT_SECURE":
 						$this->view->setMessage("Password needs at least one upper case letter, one lower case letter and one numeric character.");
+						break;
 						
 					case "NEW_PASSWORDS_NOT_MATCHING":
 						$this->view->setMessage("The new passwords are not matching!");
+						break;
 						
 					case "INVALID_PASSWORD":
 						$this->view->setMessage("Wrong password!");
+						break;
 				}
 			}
 			// Save new password and show success message.
 			// TODO: Spara nya lösenordet.
 			
 			$this->view->setMessage("New password was successully saved!");
+			echo($_SESSION['password']);
 			return $this->view->showEditAccountSettingsForm();
 		}
 		

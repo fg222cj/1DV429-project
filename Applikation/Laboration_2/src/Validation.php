@@ -41,14 +41,14 @@ class Validation{
 		
 		// Makes sure password contains both uppercase & lowercase letters, and at least one numeric character.
 		public function validatePasswordSecurity($password){
-			if (!preg_match('/[A-Z]+[a-z]/', $password) || !preg_match('/[0-9]/', $password)){
+			if (!preg_match('/[A-Z][a-z]/', $password) || !preg_match('/[0-9]/', $password)){
 			    throw new ValidationException("PASSWORD_NOT_SECURE");
 			}
 		}
 		
 		// Checks if new passwords match.
 		public function compareNewPasswordInputs($newPasswordFirstInput, $newPasswordSecondInput){
-			if(!$newPasswordFirstInput == $newPasswordSecondInput){
+			if($newPasswordFirstInput != $newPasswordSecondInput){
 				throw new ValidationException("NEW_PASSWORDS_NOT_MATCHING");
 			}
 		}
@@ -72,6 +72,7 @@ class Validation{
 		public function verifyPassword($password){
 		
 		try {
+			echo "FGDGFDGDGFDGD";
 			$user = $this->userRepository->authenticateUser($_SESSION['username'], $password);
 			if(isset($user)) {
 				return true;
