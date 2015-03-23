@@ -69,8 +69,6 @@ class LoginView {
 		
 	// Visas om inloggad
 	public function showLoggedIn($username){
-
-		$this->dateTime = $this->getTime();
 		
 		$ret = "<h2>Welcome " .$username." </h2>$this->msg
 		<form method='post'>

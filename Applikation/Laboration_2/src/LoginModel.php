@@ -70,7 +70,7 @@ class LoginModel {
 				return true;
 			}
 		}
-		catch(AuthenticationException) {
+		catch(AuthenticationException $e) {
 			return false;
 		}
 		

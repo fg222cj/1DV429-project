@@ -65,7 +65,7 @@ class LoginController {
 			
 		    if($this->view->userPressedRegisterSubmit()){
 		        if($this->view->checkRegisterInput($this->username, $this->password, $this->repeatedPassword)){
-		        	$user = new User($this->username, $this->password);
+		        	$user = new User(null, $this->username, $this->password);
 					//$this->view->setMsg($this->model->addUser($user));
 					if($this->model->addUser($user)){
 						$this->view->registerMsg(true);

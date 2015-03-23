@@ -42,18 +42,18 @@ class UserRepository extends Repository {
 			$db = $this -> connection();
 		
 			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$username . " = ?";
-			$params = array($userId);
+			$params = array($username);
 	
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
 	
-			$result = $query -> fetch();
 			
-			$user = new User($result[self::$id], $result[self::$username], $result[self::$password], $result[self::$role]);
-			if(isset($user)) {
+			if($result = $query -> fetch()) {
+				$user = new User($result[self::$id], $result[self::$username], $result[self::$password], $result[self::$role]);
 				return $user;
 			}
-			return false;
+			
+			return null;
 		}
 		
 		catch(PDOException $e) {
@@ -122,10 +122,10 @@ class UserRepository extends Repository {
 		{
 			$db = $this -> connection();
 
-			if(!getUserByName($user->username)) {
+			if(!$this->userExists($user->getUsername())) {
 			
 				$sql = "INSERT INTO " . self::$dbTable . " (" . self::$username . ", " . self::$password . ", " . self::$role . ") VALUES (?, ?, ?)";
-				$params = array($user -> getUsername(), $user -> getPassword());
+				$params = array($user -> getUsername(), $user -> getPassword(), $user -> getRole());
 	
 				$query = $db -> prepare($sql);
 				$query -> execute($params);
@@ -146,6 +146,11 @@ class UserRepository extends Repository {
 		{
 			throw new DatabaseException('USER_INSERT');
 		}
+	}
+	
+	public function userExists($username) {
+		$user = $this->getUserByName($username);
+		return isset($user);
 	}
 	
 	public function changePassword($user, $newpassword) {
