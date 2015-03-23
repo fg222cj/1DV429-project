@@ -56,20 +56,20 @@ class ProfileView {
 	}
 	
 	public function getOldPasswordInput(){
-		if(isset($_GET["oldPassword"])){
-			return $_GET["oldPassword"];
+		if(isset($_POST["oldPassword"])){
+			return $_POST["oldPassword"];
 		}
 	}
 	
 	public function getNewPasswordFirstInput(){
-		if(isset($_GET["newPassword"])){
-			return $_GET["newPassword"];
+		if(isset($_POST["newPassword"])){
+			return $_POST["newPassword"];
 		}
 	}
 	
 	public function getNewPasswordSecondInput(){
-		if(isset($_GET["repeatedNewPassword"])){
-			return $_GET["repeatedNewPassword"];
+		if(isset($_POST["repeatedNewPassword"])){
+			return $_POST["repeatedNewPassword"];
 		}
 	}
 }

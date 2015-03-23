@@ -45,12 +45,6 @@ class ProfileController {
 				switch ($e->getMessage()){
 					case "VARIABLE_NOT_STRING":
 						$this->view->setMessage("Invalid input!");
-
-					case "USERNAME_BAD_LENGTH":
-						$this->view->setMessage("Username needs to be in the range of 3-15 characters.");
-						
-					case "USERNAME_BAD_CHARACTERS":
-						$this->view->setMessage("Only alphabetic and numeric characters allowed in the username.");
 						
 					case "PASSWORD_BAD_LENGTH":
 						$this->view->setMessage("Password needs to be in the range of 8-15 characters");

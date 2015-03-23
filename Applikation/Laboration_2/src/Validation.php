@@ -48,7 +48,7 @@ class Validation{
 		
 		// Checks if new passwords match.
 		public function compareNewPasswordInputs($newPasswordFirstInput, $newPasswordSecondInput){
-			if($newPasswordFirstInput == $newPasswordSecondInput){
+			if(!$newPasswordFirstInput == $newPasswordSecondInput){
 				throw new ValidationException("NEW_PASSWORDS_NOT_MATCHING");
 			}
 		}
