@@ -69,6 +69,9 @@ class LoginView {
 		
 	// Visas om inloggad
 	public function showLoggedIn($username){
+				
+		$username = strtolower($username);
+		$username = ucfirst($username);
 		
 		$ret = "<h2>Welcome " .$username." </h2>$this->msg
 		<form method='post'>
