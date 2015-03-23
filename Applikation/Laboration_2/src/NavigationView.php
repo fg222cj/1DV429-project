@@ -14,14 +14,9 @@ class NavigationView
 			return self::$actionProfile;
 		}
 		
-		if(isset($_REQUEST[self::$actionAdmin]) && isset($_REQUEST[self::$actionProfile]) && !isset($_REQUEST[self::$actionAddUser]) && !isset($_REQUEST[self::$actionLogin]))
+		if(isset($_REQUEST[self::$actionAdmin]) && !isset($_REQUEST[self::$actionProfile]) && !isset($_REQUEST[self::$actionAddUser]) && !isset($_REQUEST[self::$actionLogin]))
 		{
 			return self::$actionAdmin;
-		}
-		
-		if(isset($_REQUEST[self::$actionAddUser]))
-		{
-			return self::$actionAddBoat;
 		}
 		
 		return self::$actionLogin;

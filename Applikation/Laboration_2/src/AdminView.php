@@ -10,14 +10,14 @@ Class AdminView
 	
 	public function __construct(UserRepository $UserRepository)
 	{
-		$this->$UserRepository = $UserRepository;
+		$this->UserRepository = $UserRepository;
 		$this->messages = array();
 	}
 	
 	// Hämtar ut alla användare och deras roller
 	public function getList()
 	{
-		return $this->$UserRepository->getAllUserAndRoles();
+		return $this->UserRepository->getAllUsers();
 	}
 	
 	// Visar den kompakta listan. Returnerar HTML-sträng.
@@ -29,12 +29,13 @@ Class AdminView
 		foreach($AllUserAndRoles as $UsersAndRoles)
 		{
 			$contentString .="
-			<li>UserName: " . $UsersAndRoles->getUserName() . "Role: " . $UsersAndRoles->getUserRole(). "</li><br>
+			<li>UserName: " . $UsersAndRoles->getUsername() . "<br>
+			Role: " . $UsersAndRoles->getRole(). "</li>
 			<form method='post'>
-				<input type='radio' name='Admin' value='1'>Admin
-				<input type='radio' name='Moderator' value='2'>Admin
-				<input type='radio' name='User' value='3'>Admin
-			</form>
+				<input type='radio' name='role' value='1'>Admin
+				<input type='radio' name='role' value='2'>Moderator
+				<input type='radio' name='role' value='3'>User
+			</form><br>
 			";
 		}
 		
