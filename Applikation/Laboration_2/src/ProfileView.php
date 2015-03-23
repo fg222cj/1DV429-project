@@ -18,7 +18,7 @@ class ProfileView {
 	}
 	
 	public function setMessage($message){
-		$this->msg .= "<ul><li>" . $message . "</li></ul>";
+		$this->msg .= "<li>" . $message . "</li>";
 	}
 	
 	public function showEditAccountSettingsForm(){
@@ -28,7 +28,7 @@ class ProfileView {
 	    <form method='post'>
 		<fieldset>
 		<legend>Change password</legend>
-		$this->msg
+		<ul>$this->msg</ul>
 		Old password: <input type='password' name='oldPassword'><br>
 		New password: <input type='password' name='newPassword'><br>Repeat new password: 
 		<input type='password' name='repeatedNewPassword'><br>Skicka: 
@@ -60,13 +60,13 @@ class ProfileView {
 		}
 	}
 	
-	public function getOldPasswordInput(){
+	public function getNewPasswordFirstInput(){
 		if(isset($_POST["newPassword"])){
 			return $_POST["newPassword"];
 		}
 	}
 	
-	public function getOldPasswordInput(){
+	public function getNewPasswordSecondInput(){
 		if(isset($_POST["repeatedNewPassword"])){
 			return $_POST["repeatedNewPassword"];
 		}

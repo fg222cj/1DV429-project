@@ -43,8 +43,23 @@ class ProfileController {
 			}
 			catch(ValidationException $e){
 				switch ($e->getMessage()){
-					case "VARIABLE_NOT_STRING";
+					case "VARIABLE_NOT_STRING":
 						$this->view->setMessage("Invalid input!");
+
+					case "USERNAME_BAD_LENGTH":
+						$this->view->setMessage("Username needs to be in the range of 3-15 characters.");
+						
+					case "USERNAME_BAD_CHARACTERS":
+						$this->view->setMessage("Only alphabetic and numeric characters allowed in the username.");
+						
+					case "PASSWORD_BAD_LENGTH":
+						$this->view->setMessage("Password needs to be in the range of 8-15 characters");
+						
+					case "PASSWORD_NOT_SECURE":
+						$this->view->setMessage("Password needs at least one upper case letter, one lower case letter and one numeric character.");
+						
+					case "NEW_PASSWORDS_NOT_MATCHING":
+						$this->view->setMessage("The new passwords are not matching!");
 				}
 			}
 			// Save new password and show success message.
