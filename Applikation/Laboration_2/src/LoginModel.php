@@ -55,11 +55,6 @@ class LoginModel {
 	public function login($username, $password){
 		$_SESSION["username"] = $username;
 		$_SESSION["password"] = $password;
-
-		$linesArr = array();
-		//$fh = fopen("src/users.txt", "r");
-		
-		
 		
 		try {
 			$user = $this->userRepository->authenticateUser($username, $password);
@@ -74,53 +69,12 @@ class LoginModel {
 			return false;
 		}
 		
-		// Ta bort detta när allt funkar.
-		
-		//$db = $this->connection();
-		//$checkIfUsernameExists = "SELECT * from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $username . "' AND " . self::$sPassword . "='" . $password . "';";
-		//$userQuery = $db->prepare($checkIfUsernameExists);
-		//$userQuery->execute();
-		//$existingRow = $userQuery->fetch(PDO::FETCH_ASSOC);
-		//if(!$existingRow){
-		//	return false;
-		//}
-		//else{
-		//	$_SESSION[$this->loggedIn] = 1;
-		//    $_SESSION[$this->browser] = $_SERVER["HTTP_USER_AGENT"];
-		//	return true;
-		//}
 	}
 	
 	public function addUser(User $user) {
 
 	try{
 		return $this->userRepository->addUser($user);
-		
-		// Ta bort nedan när det funkar att lägga till användare.
-		
-		//$db = $this->connection();
-	
-		// Kör en query där jag selectar alla användarnamn med värdet som användaren skrev in
-		//$checkIfUsernameExists = "SELECT " . self::$sUsername . " from " . $this->dbTable . " WHERE " . self::$sUsername . " ='" . $user->getUsername() . "';";
-		//$userQuery = $db->prepare($checkIfUsernameExists);
-		//$userQuery->execute();
-		//$existingRow = $userQuery->fetch(PDO::FETCH_ASSOC);
-		
-		// Om inte queryn returnerar något så finns inte användarnamnet i databasen redan
-		//if(!$existingRow){
-	    //	$sql = "INSERT INTO $this->dbTable (" . self::$sUsername . ", " . self::$sPassword . ") VALUES (?, ?)";
-	
-		//	$params = array($user->getUsername(), $user->getPassword());
-	
-		//	$query = $db->prepare($sql);
-		
-		//	$query->execute($params);
-		//	return true;
-		
-		//}
-		//else{
-		//	return false;
-		//}
 
 		} catch (\Exception $e) {
 			echo $e;
@@ -129,17 +83,4 @@ class LoginModel {
 		
 	}
 	
-	//protected function connection() {
-	//	if ($this->dbConnection == NULL)
-	//		$this->dbConnection = new \PDO(\dbSettings::$DB_CONNECTION, \dbSettings::$DB_USERNAME, \dbSettings::$DB_PASSWORD);
-		
-	//	$this->dbConnection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-		
-	//	return $this->dbConnection;
-	//}
-	
-		// Kollar om det går att registrera
-	public function tryRegister($username, $password, $repeatedPassword){
-
-	}
 }
