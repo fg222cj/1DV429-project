@@ -11,8 +11,7 @@ class HTMLView {
 		}
 		
 		if(isset($_SESSION['loggedIn'])){
-			$links .= "<div><a href='?profile' class='small button'>Profile</a></div><form method='post'>
-		<input type='submit' class='small button' value='Log out' name='logOut'/>
+			$links .= "<div><a href='?profile'>Profile </a><a href='?logout'>Log out</a></div>
 		</form>";
 		}
 		

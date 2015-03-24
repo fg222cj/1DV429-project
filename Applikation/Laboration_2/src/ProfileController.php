@@ -84,7 +84,7 @@ class ProfileController {
 				}
 				
 				if($exceptionThrown == false){
-					$this->view->setMessage("New password was successully saved!");
+					$this->view->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
 					return $this->view->showEditAccountSettingsForm();
 				}
 				else{

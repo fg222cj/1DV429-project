@@ -74,9 +74,7 @@ class LoginView {
 		$username = ucfirst($username);
 		
 		$ret = "<h2>Welcome " .$username." </h2>$this->msg
-		<form method='post'>
-		<input type='submit' class='small button' value='Log out' name='logOut'/>
-		</form>";
+		<a href='?logout'>Log out</a>";
 		return $ret;
 	}
 	
