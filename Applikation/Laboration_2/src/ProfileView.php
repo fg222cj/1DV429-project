@@ -10,7 +10,8 @@ class ProfileView {
 
 	
 	public function showProfile(){
-		$ret = "<h2>'s profile</h2>
+		$username = $_SESSION['username'];
+		$ret = "<h2>$username's profile</h2>
 		<form method='post'>
 		<input type='submit' name='editAccountSettings' value='Edit account settings'/>
 		</form>

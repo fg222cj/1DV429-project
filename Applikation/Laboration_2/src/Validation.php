@@ -48,7 +48,7 @@ class Validation{
 		
 		// Checks if new passwords match.
 		public function compareNewPasswordInputs($newPasswordFirstInput, $newPasswordSecondInput){
-			if($newPasswordFirstInput != $newPasswordSecondInput){
+			if($newPasswordFirstInput !== $newPasswordSecondInput){
 				throw new ValidationException("NEW_PASSWORDS_NOT_MATCHING");
 			}
 		}
@@ -72,7 +72,6 @@ class Validation{
 		public function verifyPassword($password){
 		
 		try {
-			echo "FGDGFDGDGFDGD";
 			$user = $this->userRepository->authenticateUser($_SESSION['username'], $password);
 			if(isset($user)) {
 				return true;
