@@ -28,13 +28,35 @@ Class AdminView
 		
 		foreach($AllUserAndRoles as $UsersAndRoles)
 		{
+			$adminchecked = "";
+			$moderatorchecked = "";
+			$userchecked = "";
+			$role = "";
+
+			switch ($UsersAndRoles -> getRole()) {
+				case "1":
+					$adminchecked = "checked";
+					$role = "Admin";
+					break;
+				case "2":
+					$moderatorchecked = "checked";
+					$role = "Moderator";
+					break;
+				case "3":
+					$userchecked = "checked";
+					$role = "User";
+					break;
+			}
+
 			$contentString .="
 			<li>UserName: " . $UsersAndRoles->getUsername() . "<br>
-			Role: " . $UsersAndRoles->getRole(). "</li>
-			<form method='post'>
-				<input type='radio' name='role' value='1'>Admin
-				<input type='radio' name='role' value='2'>Moderator
-				<input type='radio' name='role' value='3'>User
+			Role: " . $role . "</li>
+			<form method='post' action=''>
+				<input type='hidden' name='user' value= " . $UsersAndRoles->getUserId() . ">
+				<input type='radio' name='role' value='1' $adminchecked >Admin
+				<input type='radio' name='role' value='2' $moderatorchecked >Moderator
+				<input type='radio' name='role' value='3' $userchecked >User <br>
+				<input type='submit' class='small button' name='submit' value='Update'>
 			</form><br>
 			";
 		}
@@ -43,7 +65,6 @@ Class AdminView
 				<h1>User List</h1>
 				" . $this->showMessages() . "
 				<ul>$contentString</ul>
-				<input type='submit' class='small button' name='submit' value='Update'>
 		";
 		
 		return $ret;
