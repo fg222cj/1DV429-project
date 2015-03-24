@@ -31,6 +31,13 @@ class NavigationController
 					return $result;
 					break;
 
+				case NavigationView::$actionLogout:
+
+					$controller = new LoginController();
+					$result = $controller->doControll(ture);
+					return $result;
+					break;
+
 					
 				case NavigationView::$actionLogin:
 				default:
@@ -38,7 +45,6 @@ class NavigationController
 					$controller = new LoginController();
 					$result = $controller->doControll(); 
 					return $result;
-					
 					break;
 				
 			}	
