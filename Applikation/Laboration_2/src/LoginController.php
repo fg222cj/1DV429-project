@@ -21,12 +21,10 @@ class LoginController {
 			
 		// Om användaren vill logga ut
 		if($logout == true) {
-			$this->model->destroySession();
-			return $this->view->showLoginForm();
-		}
-
-		if($this->view->userPressedLogOut()){
-            $this->model->destroySession();
+			if($this->model->userLoggedInStatus()) {
+				$this->model->destroySession();
+				$this->view->logOut();
+			}
 			return $this->view->showLoginForm();
 		}
 		

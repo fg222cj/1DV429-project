@@ -4,9 +4,16 @@ require_once('src/NavigationView.php');
 require_once('src/LoginController.php');
 require_once('src/ProfileController.php');
 require_once('src/AdminController.php');
+require_once("src/LoginModel.php");
 
 class NavigationController
 {
+	private $loginmodel;
+
+	public function __construct() {
+		$this->loginmodel = new LoginModel();
+	}
+
 	public function doNavigation()
 	{
 		$controller;
@@ -18,23 +25,40 @@ class NavigationController
 				
 				case NavigationView::$actionProfile:
 					
-					$controller = new ProfileController();
-					$result = $controller->doControll();
+					if($this->loginmodel->userLoggedInStatus()) {
+						$controller = new ProfileController();
+						$result = $controller->doControll();
+					} else {
+						$controller = new LoginController();
+						$result = $controller->doControll();
+					}
+					
 					return $result;
 					break;
 					
 				
 				case NavigationView::$actionAdmin:
 					
-					$controller = new AdminController();
-					$result = $controller->AdminControl();
+					if($this->loginmodel->userLoggedInStatus()) {
+						if($this->loginmodel->adminStatus()) {
+							$controller = new AdminController();
+							$result = $controller->AdminControl();
+						} else {
+							$controller = new ProfileController();
+							$result = $controller->doControll();
+						}
+					} else {
+						$controller = new LoginController();
+						$result = $controller->doControll();
+					}
+					
 					return $result;
 					break;
 
 				case NavigationView::$actionLogout:
 
 					$controller = new LoginController();
-					$result = $controller->doControll(ture);
+					$result = $controller->doControll(true);
 					return $result;
 					break;
 

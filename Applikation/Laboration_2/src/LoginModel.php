@@ -82,5 +82,15 @@ class LoginModel {
 		}
 		
 	}
+
+	public function adminStatus() {
+		$user = $this->userRepository->getUserByName($_SESSION["username"]);
+		$userrole = $user->getRole();
+
+		if($userrole == 1) {
+			return true;
+		}
+		return false;
+	}
 	
 }

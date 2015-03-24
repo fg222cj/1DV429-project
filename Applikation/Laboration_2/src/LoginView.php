@@ -28,7 +28,7 @@ class LoginView {
 		$ret = "
 			<h1>IT-Security 1DV429</h1>
 			<a href='?register'>Register new user</a>
-			<form method='post'>
+			<form method='post' action='?'>
 			<fieldset>
 			<legend>Login - Type username and password</legend>
 			$this->msg
@@ -137,12 +137,8 @@ class LoginView {
     }
 
 	// Returnerar true om användaren klickar på 'Logga ut'
-	public function userPressedLogOut(){
-		if(isset($_POST["logOut"])){
+	public function logOut(){
 		    $this->msg = "<p>You now logged out</p>";
-			return true;
-		}
-		return false;
 	}
 	
 	public function userPressedRegister(){
