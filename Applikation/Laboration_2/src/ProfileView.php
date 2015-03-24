@@ -10,7 +10,7 @@ class ProfileView {
 
 	
 	public function showProfile(){
-		$ret = "<div><a href='?profile'>Profile</a></div><h2>'s profile</h2>
+		$ret = "<h2>'s profile</h2>
 		<form method='post'>
 		<input type='submit' name='editAccountSettings' value='Edit account settings'/>
 		</form>
