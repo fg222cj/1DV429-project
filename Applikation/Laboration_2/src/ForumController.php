@@ -13,7 +13,12 @@ class ForumController {
 	}
 	
 	public function doControl() {
-		if($this->forumView->getAction()) // Lägg till lämplig action i view (showpost eller nåt) med parent-id för tråden.
+		if($this->forumView->getThread() > 0) {
+			$this->forumView->showThread($this->forumView->getThread());
+		}// Lägg till lämplig action i view (showpost eller nåt) med parent-id för tråden.
+		else {
+			$this->forumView->showForum();
+		}
 	}
 	
 }

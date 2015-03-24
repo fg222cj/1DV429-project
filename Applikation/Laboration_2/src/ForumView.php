@@ -7,10 +7,46 @@ class ForumView {
 		$this->forumModel = $forumModel;
 	}
 	
+	public function getThread() {
+		return $_GET["thread"];
+	}
+	
 	public function showForum() {
 		$html = "<h2>SuperCoolAwesome Forum</h2>";
 		
-		$parentPosts = $this->forumModel->getParentPosts();
+		$parentPosts = $this->forumModel->getTopPosts();
+		
+		$postsAsRows = "";
+		
+		foreach ($parentPosts as $post) {
+			$postssAsRows .= "
+			<tr>
+				<td><a href='?forum&thread=" . $post->getPostId() . "'>" . $post->getTitle() . "</a></td>
+				<td>" . $post->getMostRecentTime() . "</td>
+			</tr>";
+		}
+		
+		$forumTable = "
+		<table>
+			<tr>
+				<td>Title</td>
+				<td>Most recent post</td>
+			</tr>
+			" . $postsAsRows . "
+		</table>";
+		
+		$html .= $forumTable;
+		
+		return $html;
+	}
+	
+	public function showThread($parentId) {
+		$html = "<h2>SuperCoolAwesome Forum</h2>";
+		
+		$parentPost = $this->forumModel->getPostById($parentId);
+		$childPosts = $this->forumModel->getChildPosts($parentId);
+		
+		$html .= "<h3>" . $parentPost->getTitle() . "</h3>";
 		
 		$postsAsRows = "";
 		
@@ -34,10 +70,6 @@ class ForumView {
 		$html .= $forumTable;
 		
 		return $html;
-	}
-	
-	public function showThread($parentId) {
-		// samma som ovan fast visa bara poster med parent-id som tillhör länken man klickat på
 	}
 }
 
