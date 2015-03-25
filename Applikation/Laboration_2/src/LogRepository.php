@@ -7,15 +7,16 @@ require_once ('./src/Repository.php');
 class LogRepository extends Repository {
 	
 	private static $id = 'ID';
-	private static $userId = 'userID';
 	private static $username = 'username';
 	private static $timedate = 'timedate';
 	private static $IP = 'IP';
 	private static $success = 'success';
 	
 	private static $userId = "userid";
-	private $oldRole = "oldrole";
-	private $newRole = "newrole";
+	private static $oldRole = "oldrole";
+	private static $newRole = "newrole";
+	private static $adminId = "adminid";
+	
 	
 	private static $dbTableLogin = 'loginlog';
 	private static $dbTableAdmin = "adminlog";
@@ -92,8 +93,8 @@ class LogRepository extends Repository {
 			
 		$db = $this -> connection();
 		
-			$sql = "INSERT INTO " . self::$dbTableAdmin . " (" . self::$userId . ", " . self::$oldrole . ", " . self::$newRole . ") VALUES (?, ?, ?)";
-			$params = array($adminLog -> getUserId(), $adminLog  -> getOldRole(), $adminLog  -> getNewRole());
+			$sql = "INSERT INTO " . self::$dbTableAdmin . " (" . self::$adminId . ", " . self::$userId . ", " . self::$oldRole . ", " . self::$newRole . ") VALUES (?, ?, ?, ?)";
+			$params = array($adminLog->getAdminId(), $adminLog -> getUserId(), $adminLog  -> getOldRole(), $adminLog  -> getNewRole());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
@@ -103,6 +104,7 @@ class LogRepository extends Repository {
 		
 		catch(PDOException $e)
 		{
+			die($e->getMessage());
 			throw new DatabaseException('ADMINLOG_INSERT');
 		}
 	}

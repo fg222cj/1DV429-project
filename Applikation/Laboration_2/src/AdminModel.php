@@ -13,6 +13,10 @@ class AdminModel {
 		return $this->userRepository->getAllUsers();
 	}
 	
+	public function getUser($id) {
+		return $this->userRepository->getUserByID($id);
+	}
+	
 	public function changeRole($role, $Id) {
 		if($this->userRepository->changeRole($role, $Id)) {
 			return true;

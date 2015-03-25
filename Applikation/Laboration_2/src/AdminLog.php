@@ -2,22 +2,28 @@
 
 	class AdminLog{
 		
-		private $id; 
+		private $id;
+		private $adminId; 
 		private $userId;
 		private $oldRole;
 		private $newRole;
 		private $timedate;
 	
-		public function __construct($Id, $userId, $oldRole, $newRole, $timedate){
+		public function __construct($Id ,$adminId, $userId, $oldRole, $newRole, $timedate){
 			$this->id = $Id;
+			$this->adminId = $adminId;
 			$this->userId = $userId;
 			$this->oldRole = $oldRole;
 			$this->newRole = $newRole;
 			$this->timedate = $timedate;
 		}
 		
-		public function getLogId() {
+		public function getId() {
 			return $this->id;
+		}
+		
+		public function getAdminId() {
+			return $this->adminId;
 		}
 		
 		public function getUserId(){
