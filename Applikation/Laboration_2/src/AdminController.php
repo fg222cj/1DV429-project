@@ -33,7 +33,7 @@ class AdminController
 				$oldRole = $user->getRole();
 			
 				if($this->AdminModel->changeRole($role, $Id)) {
-					$this->adminLog = new AdminLog($Id, $this->AdminView->getId(), $oldRole, $this->AdminView->getRole(), null);
+					$this->adminLog = new AdminLog(null, $_SESSION["userID"], $this->AdminView->getId(), $oldRole, $this->AdminView->getRole(), null);
 					$this->logRepository->addAdminLog($this->adminLog);
 					
 					$this->AdminView->setMsg("Update of user role succeeded");
@@ -43,7 +43,8 @@ class AdminController
 					return $this->AdminView->ShowRoleList();
 				}
 			} catch(exception $e) {
-				$this->AdminView->setMsg("Something went wrong when tried to update a user role");
+				die($e->getMessage());
+				//$this->AdminView->setMsg("Something went wrong when tried to update a user role");
 				return $this->AdminView->ShowRoleList();
 			}
 		}
