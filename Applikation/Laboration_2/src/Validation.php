@@ -20,7 +20,7 @@ class Validation{
 		
 		// Checks the username length.
 		public function validateUsernameLength($username){
-			if(strlen($username) > 15 || strlen($username) <= 3){
+			if(strlen($username) > 15 || strlen($username) < 3){
 				throw new ValidationException("USERNAME_BAD_LENGTH");
 			}
 		}
