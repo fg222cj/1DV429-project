@@ -25,7 +25,7 @@ class ProfileView {
 	
 	public function showEditAccountSettingsForm(){
 	    $ret = "
-	    <a href='?'>Back</a>
+	    <a href='?profile'>Back to profile</a>
 	    <h2>Edit account settings</h2>
 	    <form method='post'>
 		<fieldset>
