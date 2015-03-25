@@ -3,7 +3,7 @@
 abstract class Repository {
 	protected $dbUsername = 'root';
 	protected $dbPassword = '';
-	protected $dbConnstring = 'mysql:host=localhost;dbname=user1';
+	protected $dbConnstring = 'mysql:host=localhost;dbname=user';
 	protected $dbConnection;
 	
 	protected function connection()
