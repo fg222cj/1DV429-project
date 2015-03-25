@@ -45,7 +45,7 @@ class LogRepository extends Repository {
 		try {
 			$db = $this -> connection();
 			
-			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$IP . " = ? AND (". self::$timedate . " > CURDATE()-500);";
+			$sql = "SELECT COUNT(*) FROM " . self::$dbTable . " WHERE " . self::$IP . " = ? AND " . self::$timedate . " > DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
 			$params = array($IP);
 	
 			$query = $db -> prepare($sql);
@@ -53,19 +53,20 @@ class LogRepository extends Repository {
 	
 			$result = $query -> fetch();
 			
-
-			$loginLogs = array();
 			
-			foreach($result as $row)
-			{
-				$loginLog = new LoginLog($result[self::$id], $result[self::$username], $result[self::$timedate], $result[self::$IP], $result[self::$success]);
-				$loginLogs[] = $loginLog;
-			}
-				
-			return $loginLogs;
+			// $loginLogs = array();
+// 			
+			// foreach($result as $row)
+			// {
+				// $loginLog = new LoginLog($row[self::$id], $row[self::$username], $row[self::$timedate], $row[self::$IP], $row[self::$success]);
+				// $loginLogs[] = $loginLog;
+			// }
+// 				
+			return $result[0];
 		}
 		
 		catch(PDOException $e) {
+			die($e->getMessage());
 			throw new DatabaseException('LOGINLOG_FETCH');
 		}
 	}

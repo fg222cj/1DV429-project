@@ -51,20 +51,26 @@ class LoginController {
 				
 				$loginCheck = $this->logRepository->checkLoginAttempts($_SERVER['REMOTE_ADDR']);
 				print_r($loginCheck);
-				// Försöker logga in med de angivna värdena
-				if($this->model->login($this->username, $this->password)){
-					// Meddelande om att inloggningen lyckades
-					$this->view->loginSuccess();
-					$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 1);
-					$this->logRepository->addLoginLog($this->loginLog);
-					return $this->view->showLoggedIn($this->username);
-				}	
-				
-				// Om uppgifterna var fel visas login-forumläret igen
+				if($loginCheck < 5){
+					// Försöker logga in med de angivna värdena
+					if($this->model->login($this->username, $this->password)){
+						// Meddelande om att inloggningen lyckades
+						$this->view->loginSuccess();
+						$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 1);
+						$this->logRepository->addLoginLog($this->loginLog);
+						return $this->view->showLoggedIn($this->username);
+					}	
+					
+					// Om uppgifterna var fel visas login-forumläret igen
+					else{
+						$this->view->errorMsg();
+						$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 0);
+						$this->logRepository->addLoginLog($this->loginLog);
+						return $this->view->showLoginForm();
+					}
+				}
 				else{
-					$this->view->errorMsg();
-					$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 0);
-					$this->logRepository->addLoginLog($this->loginLog);
+					$this->view->setMsg("<p><font color='red'>Please wait until next login attempt.</font></p>");
 					return $this->view->showLoginForm();
 				}			
 			}
