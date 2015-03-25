@@ -50,7 +50,6 @@ class LoginController {
 			if($this->view->checkIfNotEmpty($this->username, $this->password)){
 				
 				$loginCheck = $this->logRepository->checkLoginAttempts($_SERVER['REMOTE_ADDR']);
-				print_r($loginCheck);
 				if($loginCheck < 5){
 					// Försöker logga in med de angivna värdena
 					if($this->model->login($this->username, $this->password)){

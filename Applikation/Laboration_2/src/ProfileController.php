@@ -20,6 +20,7 @@ class ProfileController {
 		$this->model = new ProfileModel();
 		$this->view = new ProfileView($this->model);
 		$this->validation = new Validation();
+		$this->logRepository = new LogRepository();
 	}
 	
 	public function doControll(){
@@ -91,6 +92,7 @@ class ProfileController {
 				
 				if($exceptionThrown == false){
 					$this->passwordUpdateLog = new PasswordUpdateLog(null, $_SESSION["userID"], null, $_SERVER['REMOTE_ADDR']);
+					print_r($this->passwordUpdateLog);
 					$this->logRepository->addPasswordUpdateLog($this->passwordUpdateLog);
 					$this->view->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
 					return $this->view->showEditAccountSettingsForm();
