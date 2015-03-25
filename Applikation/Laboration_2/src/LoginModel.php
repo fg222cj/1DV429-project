@@ -54,13 +54,13 @@ class LoginModel {
 	// Loggar in
 	public function login($username, $password){
 		$_SESSION["username"] = $username;
-		$_SESSION["password"] = $password;
 		
 		try {
 			$user = $this->userRepository->authenticateUser($username, $password);
 			if(isset($user)) {
 				// Kanske göra något mer med user? Annars bara returnera true från auth-funktionen kanske.
 				$_SESSION[$this->loggedIn] = 1;
+				$_SESSION["userID"] = $user->getUserId();
 		    	$_SESSION[$this->browser] = $_SERVER["HTTP_USER_AGENT"];
 				return true;
 			}
