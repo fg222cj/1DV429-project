@@ -55,6 +55,11 @@ class Validation{
 		
 		// ----- FORUM VALIDATIONS -----
 		
+		public function validateForumPost($post) {
+			$this->validatePostTitleLength($post->getTitle());
+			
+		}
+		
 		// Checks post title length.
 		public function validatePostTitleLength($title){
 			if(strlen($title) > 50){
@@ -63,7 +68,7 @@ class Validation{
 		}
 		
 		// Checks post text length.
-		public function validatePostTitleLength($text){
+		public function validatePostTextLength($text){
 			if(strlen($text) > 1024 || strlen($text) < 1){
 				throw new ValidationException("TEXT_BAD_LENGTH");
 			}
