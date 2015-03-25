@@ -49,9 +49,16 @@ class LogRepository extends Repository {
 	
 			$result = $query -> fetch();
 			
-			$loginLog = new LoginLog($result[self::$id], $result[self::$username], $result[self::$timedate], $result[self::$IP], $result[self::$success]);
+
+			$loginLogs = array();
+			
+			foreach($result as $row)
+			{
+				$loginLog = new LoginLog($result[self::$id], $result[self::$username], $result[self::$timedate], $result[self::$IP], $result[self::$success]);
+				$loginLogs[] = $loginLog;
+			}
 				
-			return $loginLog;
+			return $loginLogs;
 		}
 		
 		catch(PDOException $e) {
