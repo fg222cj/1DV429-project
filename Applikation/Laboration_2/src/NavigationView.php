@@ -7,6 +7,7 @@ class NavigationView
 	public static $actionAddUser = 'adduser';
 	public static $actionLogin = 'login';
 	public static $actionLogout = "logout";
+	public static $actionForum = "forum";
 	
 	public static function getAction()
 	{
@@ -22,6 +23,10 @@ class NavigationView
 
 		if(isset($_REQUEST[self::$actionLogout])) {
 			return self::$actionLogout;
+		}
+		
+		if(isset($_REQUEST[self::$actionForum])) {
+			return self::$actionForum;
 		}
 		
 		return self::$actionLogin;

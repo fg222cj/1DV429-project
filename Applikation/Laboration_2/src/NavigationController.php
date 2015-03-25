@@ -5,6 +5,7 @@ require_once('src/LoginController.php');
 require_once('src/ProfileController.php');
 require_once('src/AdminController.php');
 require_once("src/LoginModel.php");
+require_once ("src/ForumController.php");
 
 class NavigationController
 {
@@ -37,6 +38,19 @@ class NavigationController
 					break;
 					
 				
+				case NavigationView::$actionForum:
+					
+					if($this->loginmodel->userLoggedInStatus()) {
+						$controller = new ForumController();
+						$result = $controller->doControl();
+					} else {
+						$controller = new LoginController();
+						$result = $controller->doControll();
+					}
+					
+					return $result;
+					break;
+					
 				case NavigationView::$actionAdmin:
 					
 					if($this->loginmodel->userLoggedInStatus()) {
