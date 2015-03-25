@@ -6,6 +6,7 @@ class ForumRepository extends Repository {
 	private static $id = "id";
 	private static $parentId = "parentid";
 	private static $title = "title";
+	private static $text = "text";
 	private static $author = "author";
 	private static $timePosted = "timeposted";
 	
@@ -24,7 +25,7 @@ class ForumRepository extends Repository {
 	
 			$result = $query -> fetch();
 			
-			$post = new Post($result[self::$id], $result[self::$parentId], $result[self::$title], $result[self::$author], $result[self::$timePosted]);
+			$post = new Post($result[self::$id], $result[self::$parentId], $result[self::$title], $result[self::$text], $result[self::$author], $result[self::$timePosted]);
 				
 			return $post;
 		}
@@ -50,7 +51,7 @@ class ForumRepository extends Repository {
 			
 			foreach($result as $row)
 			{
-				$post = new Post($row[self::$id], $row[self::$parentId], $row[self::$title], $row[self::$author], $row[self::$timePosted]);
+				$post = new Post($row[self::$id], $row[self::$parentId], $row[self::$title], $row[self::$text], $row[self::$author], $row[self::$timePosted]);
 				$posts[] = $post;
 			}
 				
@@ -78,7 +79,7 @@ class ForumRepository extends Repository {
 			
 			foreach($result as $row)
 			{
-				$post = new Post($row[self::$id], $row[self::$parentId], $row[self::$title], $row[self::$author], $row[self::$timePosted]);
+				$post = new Post($row[self::$id], $row[self::$parentId], $row[self::$title], $row[self::$text], $row[self::$author], $row[self::$timePosted]);
 				$posts[] = $post;
 			}
 				
@@ -95,8 +96,8 @@ class ForumRepository extends Repository {
 		{
 			$db = $this -> connection();
 			
-			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$parentId . ", " . self::$title . ", " . self::$author . ") VALUES (?, ?, ?)";
-			$params = array($post -> getParentId(), $post -> getTitle(), $post -> getAuthor());
+			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$parentId . ", " . self::$title . ", " . self::$text . ", " . self::$author . ") VALUES (?, ?, ?, ?)";
+			$params = array($post -> getParentId(), $post -> getTitle(), $post -> getText(), $post -> getAuthor());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
