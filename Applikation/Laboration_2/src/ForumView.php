@@ -28,6 +28,7 @@ class ForumView {
 	
 	public function showForum() {
 		$html = "<h2>SuperCoolAwesome Forum</h2>";
+		$html .= $this->message;
 		
 		$parentPosts = $this->forumModel->getTopPosts();
 		
@@ -70,8 +71,9 @@ class ForumView {
 		return $html;
 	}
 	
-	public function showThresad($parentId) {
+	public function showThread($parentId) {
 		$html = "<h2>SuperCoolAwesome Forum</h2>";
+		$html .= $this->message;
 		
 		$parentPost = $this->forumModel->getPostById($parentId);
 		$childPosts = $this->forumModel->getChildPosts($parentId);
