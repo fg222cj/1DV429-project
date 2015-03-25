@@ -7,7 +7,6 @@ require_once ('./src/Repository.php');
 class LogRepository extends Repository {
 	
 	private static $id = 'ID';
-	private static $userId = 'userID';
 	private static $username = 'username';
 	private static $timedate = 'timedate';
 	private static $IP = 'IP';

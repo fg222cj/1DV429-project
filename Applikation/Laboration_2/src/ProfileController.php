@@ -3,6 +3,8 @@
 require_once("src/ProfileModel.php");
 require_once("src/ProfileView.php");
 require_once("src/Validation.php");
+require_once("src/LogRepository.php");
+require_once("src/PasswordUpdateLog.php");
 
 class ProfileController {
 	private $view;
@@ -11,7 +13,9 @@ class ProfileController {
 	private $oldPasswordInput;
 	private $newPasswordFirstInput;
 	private $newPasswordSecondInput;
-		
+	private $logRepository;
+	private $passwordUpdateLog;
+	
 	public function __construct(){
 		$this->model = new ProfileModel();
 		$this->view = new ProfileView($this->model);
@@ -86,6 +90,8 @@ class ProfileController {
 				}
 				
 				if($exceptionThrown == false){
+					$this->passwordUpdateLog = new PasswordUpdateLog(null, $_SESSION["userID"], null, $_SERVER['REMOTE_ADDR']);
+					$this->logRepository->addPasswordUpdateLog($this->passwordUpdateLog);
 					$this->view->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
 					return $this->view->showEditAccountSettingsForm();
 				}
