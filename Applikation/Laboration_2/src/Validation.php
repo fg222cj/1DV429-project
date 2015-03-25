@@ -57,8 +57,15 @@ class Validation{
 		
 		// Checks post title length.
 		public function validatePostTitleLength($title){
-			if(strlen($title) > 30 || strlen($title) < 3){
+			if(strlen($title) > 50){
 				throw new ValidationException("TITLE_BAD_LENGTH");
+			}
+		}
+		
+		// Checks post text length.
+		public function validatePostTitleLength($text){
+			if(strlen($text) > 1024 || strlen($text) < 1){
+				throw new ValidationException("TEXT_BAD_LENGTH");
 			}
 		}
 		

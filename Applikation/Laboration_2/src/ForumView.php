@@ -87,20 +87,13 @@ class ForumView {
 		foreach ($childPosts as $post) {
 			$postsAsRows .= "
 			<tr>
-				<td><h4>" . $post->getTitle() . "</h4></td>
-				<td>" . $post->getTimePosted() . "</td>
-			</tr>
-			<tr>
-				<td colspan='2'>" . $post->getText() . "</td>
+				<td><p>" . $post->getTimePosted() . "</p>
+				<p>" . $post->getText() . "</p></td>
 			</tr>";
 		}
 		
 		$forumTable = "
 		<table>
-			<tr>
-				<td>Title</td>
-				<td>Most recent post</td>
-			</tr>
 			" . $postsAsRows . "
 		</table>";
 		
@@ -111,7 +104,7 @@ class ForumView {
 			<fieldset>
 				<input type='hidden' name='author' value='1'>
 				<input type='hidden' name='parentid' value='" . $this->getThread() . "'>
-				<input type='text' name='title'><br>
+				<input type='hidden' name='title' value='reply'><br>
 				<textarea name='text'></textarea><br>
 				<input type='submit'>
 			</fieldset>

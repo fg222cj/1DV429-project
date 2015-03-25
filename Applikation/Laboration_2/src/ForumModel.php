@@ -1,5 +1,6 @@
 <?php
 require_once("src/ForumRepository.php");
+require_once("src/Validation.php");
 
 class ForumModel {
 	private $forumRepository;
