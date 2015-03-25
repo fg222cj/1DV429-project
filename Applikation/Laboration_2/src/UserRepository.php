@@ -169,4 +169,23 @@ class UserRepository extends Repository {
 			throw new DatabaseException('PASSWORD_CHANGE');
 		}
 	}
+	
+	public function changeRole($role, $Id) {
+		try
+		{
+			$db = $this -> connection();
+
+			$sql = "UPDATE " . self::$dbTable . " SET " . self::$role . "=? WHERE " . self::$id ."=?";
+			$params = array($role, $Id);
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+			return true;
+		}
+		catch (PDOException $e)
+		{
+			throw new DatabaseException('ROLE_CHANGE');
+		}
+	}
 }

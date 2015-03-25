@@ -79,9 +79,14 @@ class NavigationController
 					
 				case NavigationView::$actionLogin:
 				default:
+					if($this->loginmodel->userLoggedInStatus()) {
+						$controller = new ForumController();
+						$result = $controller->doControl();
+					} else {
+						$controller = new LoginController();
+						$result = $controller->doControll(); 
+					}
 					
-					$controller = new LoginController();
-					$result = $controller->doControll(); 
 					return $result;
 					break;
 				
@@ -89,8 +94,14 @@ class NavigationController
 		}
 		catch (Exception $e)
 		{
-			$controller = new LoginController();
-			$result = $controller->doControll();
+			if($this->loginmodel->userLoggedInStatus()) {
+				$controller = new ForumController();
+				$result = $controller->doControl();
+			} else {
+				$controller = new LoginController();
+				$result = $controller->doControll(); 
+			}
+					
 			return $result;
 		}
 	}

@@ -3,7 +3,7 @@
 Class AdminView
 {
 	private $UserRepository;
-	private $messages;
+	private $msg = "";
 	
 	// Istället för strängberoenden
 	//private $compactListLocation = "compactlist";
@@ -63,7 +63,7 @@ Class AdminView
 		
 		$ret = "
 				<h1>User List</h1>
-				" . $this->showMessages() . "
+				<p>" . $this->msg . "</p>
 				<ul>$contentString</ul>
 		";
 		
@@ -77,35 +77,22 @@ Class AdminView
         }
         return false;
     }
+    
+    public function getRole() {
+    	if(isset($_POST["role"])) {
+    		return $_POST["role"];
+    	}
+		return false;
+    }
 	
-	// Lägger till ett meddelande i $message-arrayen.
-	public function addMessage($message)
-	{
-		array_push($this->messages, $message);
-	}
-	
-	// Läger till rättmeddelande i $message-arrayen.
-	public function setSuccessMessage()
-	{
-		$this->addMessage("Operation was successful.");
-	}
-	
-	// Lägger till felmeddelande i $message-arrayen.
-	public function setErrorMessage()
-	{
-		$this->addMessage("An unknown error has occured!");
-	}
-	
-	// Visar meddelanden.
-	private function showMessages()
-	{
-		$ret = "";
-		// Loopar igenom messages-arrayen och skriver ut meddelanden.
-		foreach($this->messages as $message)
-		{
-			$ret .= '<p>' . $message . '</p>';
-		}
-		
-		return $ret;
+	public function getId() {
+    	if(isset($_POST["user"])) {
+    		return $_POST["user"];
+    	}
+		return false;
+    }
+    
+    public function setMsg($msg){
+		$this->msg = $msg;
 	}
 }
