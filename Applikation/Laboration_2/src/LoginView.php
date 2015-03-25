@@ -73,8 +73,7 @@ class LoginView {
 		$username = strtolower($username);
 		$username = ucfirst($username);
 		
-		$ret = "<h2>Welcome " .$username." </h2>$this->msg
-		<a href='?logout'>Log out</a>";
+		$ret = "<h2>Welcome " .$username." </h2>$this->msg";
 		return $ret;
 	}
 	
