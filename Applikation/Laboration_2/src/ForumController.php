@@ -15,12 +15,23 @@ class ForumController {
 	public function doControl() {
 		$post = $this->forumView->getPost();
 		if(isset($post)) {
-			if($this->forumModel->insertPost($post)) {
-				$this->forumView->setMessage("Your post was submitted.");
+			try {
+				if($this->forumModel->insertPost($post)) {
+					$this->forumView->setMessage("Your post was submitted.");
+				}
+				else {
+					$this->forumView->setMessage("Something fucked up. Sorry. Probably your own fault though.");
+				}
 			}
-			else {
-				$this->forumView->setMessage("Something fucked up. Sorry. Probably your own fault though.");
+			catch(ValidationException $e) {
+				switch($e->getMessage()) {
+					case "TEXT_BAD_LENGTH":
+						$this->forumView->setMessage("Your message was too long, the limit is 1024 characters.");
+					case "TITLE_BAD_LENGTH":
+						$this->forumView->setMessage("Your title was too long, the limit is 50 characters.");
+				}
 			}
+			
 		}
 		
 		if($this->forumView->getThread() > 0) {

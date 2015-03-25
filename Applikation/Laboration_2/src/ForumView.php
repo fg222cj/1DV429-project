@@ -20,7 +20,7 @@ class ForumView {
 	public function getPost() {
 		if(isset($_POST["parentid"]) && isset($_POST["title"]) && isset($_POST["text"])
 		&& isset($_POST["author"])) {
-			$post = new Post(0, $_POST["parentid"], $_POST["title"], $_POST["text"], $_POST["author"], null);
+			$post = new Post(0, $_POST["parentid"], $_POST["title"], $_POST["text"], $_SESSION["userID"], null);
 			return $post;
 		}
 		return null;
@@ -57,10 +57,10 @@ class ForumView {
 		$forumForm = "
 		<form method='post' action=''><br>
 			<fieldset>
-				<input type='hidden' name='author' value='1'>
+				<input type='hidden' name='author' value='" . $_SESSION['userID'] . "'>
 				<input type='hidden' name='parentid' value='0'>
-				<input type='text' name='title'><br>
-				<textarea name='text'></textarea><br>
+				<input type='text' name='title' maxlength='50'><br>
+				<textarea name='text' maxlength='1024'></textarea><br>
 				<input type='submit'>
 			</fieldset>
 		</form>

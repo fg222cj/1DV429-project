@@ -4,9 +4,11 @@ require_once("src/Validation.php");
 
 class ForumModel {
 	private $forumRepository;
+	private $validation;
 	
 	public function __construct() {
 		$this->forumRepository = new ForumRepository();
+		$this->validation = new Validation();
 	}
 	
 	public function getTopPosts() {
@@ -22,11 +24,17 @@ class ForumModel {
 	}
 	
 	public function insertPost($post) {
+		$this->validateForumPost($post);
 		return $this->forumRepository->insertPost($post);
 	}
 	
 	public function getPostById($id) {
 		return $this->forumRepository->getPostById($id);
+	}
+	
+	public function validateForumPost($post) {
+		$this->validation->validatePostTitleLength($post->getTitle());
+		$this->validation->validatePostTextLength($post->getText());
 	}
 }
 

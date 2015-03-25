@@ -55,11 +55,6 @@ class Validation{
 		
 		// ----- FORUM VALIDATIONS -----
 		
-		public function validateForumPost($post) {
-			$this->validatePostTitleLength($post->getTitle());
-			
-		}
-		
 		// Checks post title length.
 		public function validatePostTitleLength($title){
 			if(strlen($title) > 50){
