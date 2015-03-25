@@ -1,5 +1,6 @@
 <?php
 require_once('./src/LoginLog.php');
+require_once ('src/AdminLog.php');
 require_once ('./src/Repository.php');
 
 class LogRepository extends Repository {
@@ -10,7 +11,12 @@ class LogRepository extends Repository {
 	private static $IP = 'IP';
 	private static $success = 'success';
 	
+	private static $userId = "userid";
+	private $oldRole = "oldrole";
+	private $newRole = "newrole";
+	
 	private static $dbTable = 'loginlog';
+	private static $dbTableAdmin = "adminlog";
 	
 
 	public function addLoginLog($loginLog) {
@@ -24,8 +30,6 @@ class LogRepository extends Repository {
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
-			
-			$userId = $db->lastInsertId();
 			
 			return true;
 		}
@@ -63,6 +67,27 @@ class LogRepository extends Repository {
 		
 		catch(PDOException $e) {
 			throw new DatabaseException('LOGINLOG_FETCH');
+		}
+	}
+	
+	public function addAdminLog($adminLog) {
+		try
+		{
+			
+		$db = $this -> connection();
+		
+			$sql = "INSERT INTO " . self::$dbTableAdmin . " (" . self::$userId . ", " . self::$oldrole . ", " . self::$newRole . ") VALUES (?, ?, ?)";
+			$params = array($adminLog -> getUserId(), $adminLog  -> getOldRole(), $adminLog  -> getNewRole());
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+			return true;
+		}
+		
+		catch(PDOException $e)
+		{
+			throw new DatabaseException('ADMINLOG_INSERT');
 		}
 	}
 }
