@@ -2,6 +2,7 @@
 
 //Visualisera data
 //Behöver tillgång till datan som den ska visualisera från modellen
+require_once('src/Validation.php');
 
 class LoginView {
 	private $model;
@@ -10,10 +11,11 @@ class LoginView {
 	private $userArr = array();
 	private $rememberValue;
 	private $msg = "";
-
+	private $validation;
+	
 	public function __construct(LoginModel $model){
 		$this->model = $model;
-
+		$this->validation = new Validation();
 	}
 	
 	//Visar login-formuläret om ej redan inloggad
@@ -94,8 +96,56 @@ class LoginView {
 	}
 	
 	public function checkRegisterInput($username, $password, $repeatedPassword){
+		echo $username;
+		
+		$exceptionThrown = false;
+			
+			try{					
+				$this->validation->validateString($username);
+				$this->validation->validateString($password);
+				$this->validation->validateString($repeatedPassword);
+				
+				$this->validation->validateUsernameLength($username);
+				$this->validation->validateUsernameCharacters($username);
 
-	    $updatedUsername = "";
+				$this->validation->validatePasswordLength($password);
+				$this->validation->validatePasswordSecurity($password);
+				
+				$this->validation->compareNewPasswordInputs($password, $repeatedPassword);
+			}
+			
+			catch(ValidationException $e){
+				$exceptionThrown = true;
+				switch ($e->getMessage()){										
+					case "VARIABLE_NOT_STRING":
+						$this->msg .= "<p>Invalid input!</p>";
+						break;
+						
+					case "USERNAME_BAD_LENGTH":
+						$this->msg .= "<p>Username needs to be in the range of 3-15 characters</p>";
+						break;
+					
+					case "USERNAME_BAD_CHARACTERS":
+						$this->msg .= "<p>Username contains invalid characters.</p>";
+						break;
+
+					case "PASSWORD_BAD_LENGTH":
+						$this->msg .= "<p>Password needs to be in the range of 8-15 characters</p>";
+						break;
+						
+					case "PASSWORD_NOT_SECURE":
+						$this->msg .= "<p>Password needs at least one upper case letter, one lower case letter and one numeric character.</p>";
+						break;
+						
+					case "NEW_PASSWORDS_NOT_MATCHING":
+						$this->msg .= "<p>The passwords are not matching!</p>";
+						break;
+				}
+				return false;
+			}
+		return true;
+		
+/*	    $updatedUsername = "";
 	    if(!ctype_alnum($username)){
 	    	$length = strlen($username);
 	    	$array = array();
@@ -124,7 +174,7 @@ class LoginView {
     	    return false;
 	    }
 	    
-	    return true;
+	    return true;  */
 	}
 
 	// Returnerar true om användaren klickar på 'Logga in'.

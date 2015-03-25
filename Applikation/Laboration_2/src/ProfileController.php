@@ -37,12 +37,14 @@ class ProfileController {
 				$this->validation->validateString($this->oldPasswordInput);
 				$this->validation->validateString($this->newPasswordFirstInput);
 				
+				$this->validation->verifyPassword($this->oldPasswordInput);
+				
 				$this->validation->validatePasswordLength($this->newPasswordFirstInput);
 				$this->validation->validatePasswordSecurity($this->newPasswordFirstInput);
 					
 				$this->validation->compareNewPasswordInputs($this->newPasswordFirstInput, $this->newPasswordSecondInput);
-				$this->validation->verifyPassword($this->oldPasswordInput);
 			}
+			
 			catch(ValidationException $e){
 				$exceptionThrown = true;
 				switch ($e->getMessage()){
