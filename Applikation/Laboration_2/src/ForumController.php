@@ -19,7 +19,7 @@ class ForumController {
 				$this->forumView->setMessage("Your post was submitted.");
 			}
 			else {
-				$this->forumView->setMessage("Something fucked up. Sorry.");
+				$this->forumView->setMessage("Something fucked up. Sorry. Probably your own fault though.");
 			}
 		}
 		
