@@ -19,6 +19,10 @@ class ForumModel {
 		$posts = $this->forumRepository->getChildPosts($parentId);
 		return $posts;
 	}
+	
+	public function insertPost($post) {
+		return $this->forumRepository->insertPost($post);
+	}
 }
 
 
