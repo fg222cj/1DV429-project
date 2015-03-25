@@ -1,17 +1,17 @@
 <?php
 
-require_once('src/UserRepository.php');
 require_once('src/AdminView.php');
+require_once('src/AdminModel.php');
 
 class AdminController
 {
 	private $AdminView;
-	private $UserRepository;
+	private $AdminModel;
 	
 	public function __construct()
 	{
-		$this->UserRepository = new UserRepository();
-		$this->AdminView = new AdminView($this->UserRepository);
+		$this->AdminModel = new AdminModel();
+		$this->AdminView = new AdminView($this->AdminModel);
 	}
 	
 	// Visar admin sida där man kan ändra roller.
@@ -24,7 +24,7 @@ class AdminController
 				$Id = $this->AdminView->getId();
 				$role = $this->AdminView->getRole();
 			
-				if($this->UserRepository->changeRole($role, $Id)) {
+				if($this->AdminModel->changeRole($role, $Id)) {
 					$this->AdminView->setMsg("Update of user role succeeded");
 					return $this->AdminView->ShowRoleList();
 				} else {

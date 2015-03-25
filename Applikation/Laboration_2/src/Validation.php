@@ -68,6 +68,14 @@ class Validation{
 				throw new ValidationException("POST_BAD_CHARACTERS");
 			}
 		}
+		
+		public function checkRoleValue($role) {
+			if($role > 3 || $role < 0) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	
 		public function verifyPassword($password){
 		

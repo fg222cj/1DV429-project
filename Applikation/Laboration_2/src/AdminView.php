@@ -2,28 +2,19 @@
 
 Class AdminView
 {
-	private $UserRepository;
+	private $AdminModel;
 	private $msg = "";
 	
-	// Istället för strängberoenden
-	//private $compactListLocation = "compactlist";
-	
-	public function __construct(UserRepository $UserRepository)
+	public function __construct($AdminModel)
 	{
-		$this->UserRepository = $UserRepository;
+		$this->AdminModel = $AdminModel;
 		$this->messages = array();
-	}
-	
-	// Hämtar ut alla användare och deras roller
-	public function getList()
-	{
-		return $this->UserRepository->getAllUsers();
 	}
 	
 	// Visar den kompakta listan. Returnerar HTML-sträng.
 	public function ShowRoleList()
 	{
-		$AllUserAndRoles = $this->getList();
+		$AllUserAndRoles = $this->AdminModel->getList();
 		$contentString = "";
 		
 		foreach($AllUserAndRoles as $UsersAndRoles)
