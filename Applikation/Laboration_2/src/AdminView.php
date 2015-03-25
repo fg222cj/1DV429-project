@@ -1,14 +1,19 @@
 <?php
 
+require_once ("src/Validation.php");
+require_once ("src/Exceptions.php");
+
 Class AdminView
 {
 	private $AdminModel;
 	private $msg = "";
+	private $validation;
 	
 	public function __construct($AdminModel)
 	{
 		$this->AdminModel = $AdminModel;
 		$this->messages = array();
+		$this->validation = new Validation();
 	}
 	
 	// Visar den kompakta listan. Returnerar HTML-sträng.
@@ -70,8 +75,12 @@ Class AdminView
     }
     
     public function getRole() {
-    	if(isset($_POST["role"])) {
-    		return $_POST["role"];
+    	$role = $_POST["role"];
+    	
+    	if(isset($role)) {
+    		if($this->validation->checkRoleValue($role)) {
+    			return $role;
+    		}
     	}
 		return false;
     }

@@ -70,11 +70,10 @@ class Validation{
 		}
 		
 		public function checkRoleValue($role) {
-			if($role > 3 || $role < 0) {
-				return false;
-			} else {
-				return true;
+			if($role > 3 || $role <= 0) {
+				throw new ValidationException("BAD_ROLEVALUE");
 			}
+			return true;
 		}
 	
 		public function verifyPassword($password){

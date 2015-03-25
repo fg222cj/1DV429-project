@@ -29,9 +29,11 @@ class AdminController
 					return $this->AdminView->ShowRoleList();
 				} else {
 					$this->AdminView->setMsg("Something went wrong when tried to update a user role");
+					return $this->AdminView->ShowRoleList();
 				}
 			} catch(exception $e) {
 				$this->AdminView->setMsg("Something went wrong when tried to update a user role");
+				return $this->AdminView->ShowRoleList();
 			}
 		}
 			
