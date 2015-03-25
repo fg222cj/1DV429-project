@@ -13,9 +13,19 @@ class ForumController {
 	}
 	
 	public function doControl() {
+		if(isset($this->forumView->getPost())) {
+			$post = $this->forumView->getPost();
+			if($this->forumModel->insertPost($post)) {
+				$this->forumView->setMessage("Your post was submitted.");
+			}
+			else {
+				$this->forumView->setMessage("Something fucked up. Sorry.");
+			}
+		}
+		
 		if($this->forumView->getThread() > 0) {
 			$this->forumView->showThread($this->forumView->getThread());
-		}// Lägg till lämplig action i view (showpost eller nåt) med parent-id för tråden.
+		}
 		else {
 			$this->forumView->showForum();
 		}
