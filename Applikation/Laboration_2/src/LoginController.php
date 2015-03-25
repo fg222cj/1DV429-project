@@ -3,6 +3,8 @@
 require_once("src/LoginModel.php");
 require_once("src/LoginView.php");
 require_once("src/User.php");
+require_once("src/LoginLog.php");
+require_once("src/LogRepository.php");
 
 class LoginController {
 	private $view;
@@ -11,10 +13,13 @@ class LoginController {
 	private $password = "";
 	private $repeatedPassword = "";
 	private $value;
+	private $loginLog;
+	private $logRepository;
 	
 	public function __construct(){
 		$this->model = new LoginModel();
 		$this->view = new LoginView($this->model);
+		$this->logRepository = new LogRepository();
 	}
 	
 	public function doControll($logout = null){
@@ -44,16 +49,22 @@ class LoginController {
 			// Kollar på användarnamn och lösenord är ifyllt
 			if($this->view->checkIfNotEmpty($this->username, $this->password)){
 				
+				$loginCheck = $this->logRepository->checkLoginAttempts($_SERVER['REMOTE_ADDR']);
+				print_r($loginCheck);
 				// Försöker logga in med de angivna värdena
 				if($this->model->login($this->username, $this->password)){
 					// Meddelande om att inloggningen lyckades
 					$this->view->loginSuccess();
+					$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 1);
+					$this->logRepository->addLoginLog($this->loginLog);
 					return $this->view->showLoggedIn($this->username);
 				}	
 				
 				// Om uppgifterna var fel visas login-forumläret igen
 				else{
 					$this->view->errorMsg();
+					$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 0);
+					$this->logRepository->addLoginLog($this->loginLog);
 					return $this->view->showLoginForm();
 				}			
 			}
