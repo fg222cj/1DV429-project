@@ -40,7 +40,7 @@ class ForumRepository extends Repository {
 			$db = $this -> connection();
 		
 			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$parentId . " = ?";
-			$params = array();
+			$params = array($parentId);
 	
 			$query = $db -> prepare($sql);
 			$query -> execute($params);

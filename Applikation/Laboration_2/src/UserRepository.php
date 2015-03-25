@@ -120,6 +120,7 @@ class UserRepository extends Repository {
 	public function addUser($user) {
 		try
 		{
+			
 			$db = $this -> connection();
 
 			if(!$this->userExists($user->getUsername())) {

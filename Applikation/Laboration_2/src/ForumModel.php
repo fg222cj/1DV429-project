@@ -16,12 +16,16 @@ class ForumModel {
 	
 	public function getChildPosts($parentId) {
 		$posts = array();
-		$posts = $this->forumRepository->getChildPosts($parentId);
+		$posts = $this->forumRepository->getPostsByParent($parentId);
 		return $posts;
 	}
 	
 	public function insertPost($post) {
 		return $this->forumRepository->insertPost($post);
+	}
+	
+	public function getPostById($id) {
+		return $this->forumRepository->getPostById($id);
 	}
 }
 

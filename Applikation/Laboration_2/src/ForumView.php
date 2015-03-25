@@ -34,10 +34,10 @@ class ForumView {
 		$postsAsRows = "";
 		
 		foreach ($parentPosts as $post) {
-			$postssAsRows .= "
+			$postsAsRows .= "
 			<tr>
 				<td><a href='?forum&thread=" . $post->getPostId() . "'>" . $post->getTitle() . "</a></td>
-				<td>" . $post->getMostRecentTime() . "</td>
+				<td>" . $post->getTimePosted() . "</td>
 			</tr>";
 		}
 		
@@ -70,21 +70,26 @@ class ForumView {
 		return $html;
 	}
 	
-	public function showThread($parentId) {
+	public function showThresad($parentId) {
 		$html = "<h2>SuperCoolAwesome Forum</h2>";
 		
 		$parentPost = $this->forumModel->getPostById($parentId);
 		$childPosts = $this->forumModel->getChildPosts($parentId);
 		
 		$html .= "<h3>" . $parentPost->getTitle() . "</h3>";
+		$html .= "<p>" . $parentPost->getTimePosted() . "</p>";
+		$html .= "<p>" . $parentPost->getText() . "</p>";
 		
 		$postsAsRows = "";
 		
-		foreach ($parentPosts as $post) {
-			$postssAsRows .= "
+		foreach ($childPosts as $post) {
+			$postsAsRows .= "
 			<tr>
-				<td>" . $post->getTitle() . "</td>
-				<td>" . $post->getMostRecentTime() . "</td>
+				<td><h4>" . $post->getTitle() . "</h4></td>
+				<td>" . $post->getTimePosted() . "</td>
+			</tr>
+			<tr>
+				<td colspan='2'>" . $post->getText() . "</td>
 			</tr>";
 		}
 		

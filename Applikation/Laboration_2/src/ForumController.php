@@ -13,8 +13,8 @@ class ForumController {
 	}
 	
 	public function doControl() {
-		if(isset($this->forumView->getPost())) {
-			$post = $this->forumView->getPost();
+		$post = $this->forumView->getPost();
+		if(isset($post)) {
 			if($this->forumModel->insertPost($post)) {
 				$this->forumView->setMessage("Your post was submitted.");
 			}
@@ -24,10 +24,10 @@ class ForumController {
 		}
 		
 		if($this->forumView->getThread() > 0) {
-			$this->forumView->showThread($this->forumView->getThread());
+			return $this->forumView->showThread($this->forumView->getThread());
 		}
 		else {
-			$this->forumView->showForum();
+			return $this->forumView->showForum();
 		}
 	}
 	
