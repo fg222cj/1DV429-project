@@ -13,6 +13,10 @@ class ForumController {
 	}
 	
 	public function doControl() {
+		if(!isset($_SESSION["userID"])) {
+			header('location: ?login');
+		}
+		
 		$post = $this->forumView->getPost();
 		if(isset($post)) {
 			try {

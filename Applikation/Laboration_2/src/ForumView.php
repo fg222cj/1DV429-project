@@ -4,10 +4,12 @@ require_once("src/Post.php");
 class ForumView {
 	private $forumModel;
 	private $message;
+	private $activeUser;
 	
 	public function __construct($forumModel) {
 		$this->forumModel = $forumModel;
 		$this->message = "";
+		$this->activeUser = $this->forumModel->getUser($_SESSION["userID"]);
 	}
 	
 	public function getThread() {
@@ -78,16 +80,25 @@ class ForumView {
 		$parentPost = $this->forumModel->getPostById($parentId);
 		$childPosts = $this->forumModel->getChildPosts($parentId);
 		
+		$delete = "";
+		if($this->activeUser->getRole() <= 2 || $this->activeUser->getUserId() == $parentPost->getAuthor()) {
+			$delete = "<a href='?forum&thread='" . $parentId . "'&delete='" . $parentPost->getPostId() . "'>Delete this post</a>";
+		}
+		
 		$html .= "<h3>" . $parentPost->getTitle() . "</h3>";
-		$html .= "<p>" . $parentPost->getTimePosted() . "</p>";
+		$html .= "<p>" . $parentPost->getTimePosted() . " " . $delete . "</p>";
 		$html .= "<p>" . $parentPost->getText() . "</p>";
 		
 		$postsAsRows = "";
 		
 		foreach ($childPosts as $post) {
+			$delete = "";
+			if($this->activeUser->getRole() <= 2 || $this->activeUser->getUserId() == $post->getAuthor()) {
+				$delete = "<a href='?forum&thread='" . $parentId . "'&delete='" .$post->getPostId() . "'>Delete this post</a>";
+			}
 			$postsAsRows .= "
 			<tr>
-				<td><p>" . $post->getTimePosted() . "</p>
+				<td><p>" . $post->getTimePosted() . " " . $delete . "</p>
 				<p>" . $post->getText() . "</p></td>
 			</tr>";
 		}
