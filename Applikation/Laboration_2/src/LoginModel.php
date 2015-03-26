@@ -56,7 +56,7 @@ class LoginModel {
 		$_SESSION["username"] = $username;
 		
 		try {
-			$user = $this->userRepository->authenticateUser($username, $password);
+			$user = $this->userRepository->authenticateUser($username, md5($password));
 			if(isset($user)) {
 				// Kanske göra något mer med user? Annars bara returnera true från auth-funktionen kanske.
 				$_SESSION[$this->loggedIn] = 1;
