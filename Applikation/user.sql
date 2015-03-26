@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 3.4.3.2
 -- http://www.phpmyadmin.net
 --
@@ -107,7 +107,7 @@ INSERT INTO `forumlog` (`id`, `postid`, `parentid`, `title`, `text`, `author`, `
 
 CREATE TABLE IF NOT EXISTS `loginlog` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(15) DEFAULT NULL,
+  `username` varchar(30) DEFAULT NULL,
   `timedate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `IP` varchar(16) NOT NULL,
   `success` int(1) NOT NULL,

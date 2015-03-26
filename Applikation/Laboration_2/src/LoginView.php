@@ -56,6 +56,7 @@ class LoginView {
 			$this->msg
 			Username: 
 			<input type='text' name='regUsername' id='username' value='$this->username'>
+			<p>Password need to have at least 8 characters, at least one upper-case letter and one lowercase letter, at least one digit and no special characters</p>
 			Password: 
 			<input type='password' name='regPassword'>
 			Repeat password: 

@@ -57,7 +57,7 @@ class ForumView {
 		<table>
 			<tr>
 				<td>Title</td>
-				<td>Most recent post</td>
+				<td>Post created</td>
 			</tr>
 			" . $postsAsRows . "
 		</table>";
