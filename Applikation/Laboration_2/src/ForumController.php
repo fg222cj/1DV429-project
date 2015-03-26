@@ -2,6 +2,7 @@
 require_once("src/Post.php");
 require_once("src/ForumView.php");
 require_once("src/ForumModel.php");
+require_once("src/Exceptions.php");
 
 class ForumController {
 	private $forumModel;
@@ -13,10 +14,8 @@ class ForumController {
 	}
 	
 	public function doControl() {
-		if(!isset($_SESSION["userID"])) {
-			header('location: ?login');
-		}
 		
+		//Check if admins, moderators and users can delete posts. Also log all deleted post.
 		if($this->forumView->getDelete() > 0) {
 			$post = $this->forumModel->getPostById($this->forumView->getDelete());
 			$postAuthor = $post->getAuthor();
@@ -79,6 +78,7 @@ class ForumController {
 			
 		}
 	
+		//Check if the thread exist. Else show forum.
 		if($this->forumView->getThread() > 0) {
 			$post = $this->forumModel->getPostById($this->forumView->getThread());
 			if($post->getParentId() == 0 && $post->getPostId() > 0) {

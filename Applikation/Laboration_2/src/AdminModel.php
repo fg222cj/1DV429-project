@@ -26,9 +26,5 @@ class AdminModel {
 		}
 		return false;
 	}
-	
-	
 }
-
-
 ?>

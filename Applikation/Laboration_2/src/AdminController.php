@@ -24,7 +24,6 @@ class AdminController
 	{
 		
 		if($this->AdminView->userPressedUpdate()) {
-			
 			try {
 				$Id = $this->AdminView->getId();
 				$role = $this->AdminView->getRole();
@@ -35,6 +34,7 @@ class AdminController
 				$user = $this->AdminModel->getUser($this->AdminView->getId());
 				$oldRole = $user->getRole();
 				
+				//Check if user got admin access.
 				if($adminRole == 1) {
 					if($this->AdminModel->changeRole($role, $Id)) {
 						$this->adminLog = new AdminLog(null, $_SESSION["userID"], $this->AdminView->getId(), $oldRole, $this->AdminView->getRole(), null);
@@ -47,17 +47,14 @@ class AdminController
 						return $this->AdminView->ShowRoleList();
 					}
 				}
-			} catch(exception $e) {
+			} catch(Exception $e) {
 				$this->AdminView->setMsg("Something went wrong when tried to update a user role");
 				return $this->AdminView->ShowRoleList();
 			}
-		}
-			
+		}	
 		else {
 			return $this->AdminView->ShowRoleList();
-		}			
-			
+		}				
 	}
 }
-
 ?>

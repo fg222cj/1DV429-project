@@ -15,7 +15,7 @@ Class AdminView
 		$this->validation = new Validation();
 	}
 	
-	//Show the role list. Return HTML
+	//Show the role list. Return HTML-string.
 	public function ShowRoleList()
 	{
 		$AllUserAndRoles = $this->AdminModel->getList();
@@ -52,15 +52,13 @@ Class AdminView
 				<input type='radio' name='role' value='2' $moderatorchecked >Moderator
 				<input type='radio' name='role' value='3' $userchecked >User <br>
 				<input type='submit' class='small button' name='submit' value='Update'>
-			</form><br>
-			";
+			</form><br>";
 		}
 		
 		$ret = "
 				<h1>User List</h1>
 				<p>" . $this->msg . "</p>
-				<ul>$contentString</ul>
-		";
+				<ul>$contentString</ul>";
 		
 		return $ret;
 	}

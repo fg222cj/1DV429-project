@@ -1,5 +1,5 @@
 <?php
-require_once("Post.php");
+require_once("src/Post.php");
 require_once("src/Repository.php");
 
 class ForumRepository extends Repository {

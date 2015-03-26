@@ -64,7 +64,6 @@ class ForumView {
 		
 		$html .= $forumTable;
 		
-		// Fixa vettig author
 		$forumForm = "
 		<form method='post' action=''><br>
 			<fieldset>
