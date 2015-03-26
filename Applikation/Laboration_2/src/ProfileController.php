@@ -5,6 +5,8 @@ require_once("src/ProfileView.php");
 require_once("src/Validation.php");
 require_once("src/LogRepository.php");
 require_once("src/PasswordUpdateLog.php");
+require_once("src/LoginView.php");
+require_once("src/LoginController.php");
 
 class ProfileController {
 	private $view;
@@ -15,12 +17,16 @@ class ProfileController {
 	private $newPasswordSecondInput;
 	private $logRepository;
 	private $passwordUpdateLog;
+	private $loginView;
+	private $loginController;
 	
 	public function __construct(){
 		$this->model = new ProfileModel();
 		$this->view = new ProfileView($this->model);
 		$this->validation = new Validation();
 		$this->logRepository = new LogRepository();
+//		$this->loginView = new LoginView();
+		$this->loginController = new LoginController();
 	}
 	
 	public function doControll(){
@@ -62,7 +68,7 @@ class ProfileController {
 						break;
 						
 					case "PASSWORD_NOT_SECURE":
-						$this->view->setMessage("Password needs at least one upper case letter, one lower case letter and one numeric character.");
+						$this->view->setMessage("Password either contains invalid characters, or does not contain at least one upper case letter, one lower case letter and one numeric character.");
 						break;
 						
 					case "NEW_PASSWORDS_NOT_MATCHING":
@@ -93,7 +99,8 @@ class ProfileController {
 				if($exceptionThrown == false){
 					$this->passwordUpdateLog = new PasswordUpdateLog(null, $_SESSION["userID"], null, $_SERVER['REMOTE_ADDR']);
 					$this->logRepository->addPasswordUpdateLog($this->passwordUpdateLog);
-					$this->view->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
+					$this->loginController->doControll(true);
+					$this->loginView->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
 					return $this->view->showEditAccountSettingsForm();
 				}
 				else{

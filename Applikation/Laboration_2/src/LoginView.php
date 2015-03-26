@@ -133,7 +133,7 @@ class LoginView {
 						break;
 						
 					case "PASSWORD_NOT_SECURE":
-						$this->msg .= "<p><font color='#FF0000'>Password needs at least one upper case letter, one lower case letter and one numeric character.</font></p>";
+						$this->msg .= "<p><font color='#FF0000'>Password either contains invalid characters, or does not contain at least one upper case letter, one lower case letter and one numeric character.</font></p>";
 						break;
 						
 					case "NEW_PASSWORDS_NOT_MATCHING":
