@@ -26,8 +26,12 @@ class ForumController {
 			
 			if($post->getParentId() > 0 && $post->getPostId() > 0) {
 				if($postAuthor == $_SESSION["userID"] || $currentUserRole == 2 || $currentUserRole == 1) {
-					$this->forumModel->deletePost($post);
-					$this->forumView->setMessage("Deleted post successfully");
+					if($this->forumModel->deletePost($post)) {
+						$this->forumView->setMessage("Deleted post successfully");
+					}
+					else {
+						$this->forumView->setMessage("Post could not be deleted");
+					}
 				}
 			} elseif($post->getPostId() > 0) {
 				if($currentUserRole == 2 || $currentUserRole == 1 || ($postAuthor == $_SESSION["userID"] && count($this->forumModel->getChildPosts($post->getPostID())) < 1)) {
@@ -37,8 +41,12 @@ class ForumController {
 						$this->forumModel->deletePost($childPost);
 					}
 					
-					$this->forumModel->deletePost($post);
-					$this->forumView->setMessage("Deleted post successfully");
+					if($this->forumModel->deletePost($post)) {
+						$this->forumView->setMessage("Deleted post successfully");
+					}
+					else {
+						$this->forumView->setMessage("Post could not be deleted");
+					}
 					return $this->forumView->showForum();
 				}
 				else {

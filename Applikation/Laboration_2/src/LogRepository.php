@@ -2,6 +2,7 @@
 require_once('./src/LoginLog.php');
 require_once('./src/PasswordUpdateLog.php');
 require_once ('src/AdminLog.php');
+require_once ('src/Post.php');
 require_once ('./src/Repository.php');
 
 class LogRepository extends Repository {
@@ -17,10 +18,20 @@ class LogRepository extends Repository {
 	private static $newRole = "newrole";
 	private static $adminId = "adminid";
 	
+	private static $postId = "postid";
+	private static $parentId = "parentid";
+	private static $title = "title";
+	private static $text = "text";
+	private static $author = "author";
+	private static $timePosted = "timeposted";
+	private static $deletedBy = "deletedby";
+	private static $timeDeleted = "timedeleted";
+	
 	
 	private static $dbTableLogin = 'loginlog';
 	private static $dbTableAdmin = "adminlog";
 	private static $dbTablePassword = 'passwordupdatelog';
+	private static $dbTableForum = "forumlog";
 	
 
 	public function addLoginLog($loginLog) {
@@ -40,7 +51,6 @@ class LogRepository extends Repository {
 		
 		catch(PDOException $e)
 		{
-			die($e->getMessage());
 			throw new DatabaseException('LOGINLOG_INSERT');
 		}
 	}
@@ -61,7 +71,6 @@ class LogRepository extends Repository {
 		
 		catch(PDOException $e)
 		{
-			die($e->getMessage());
 			throw new DatabaseException('LOGINLOG_INSERT');
 		}
 	}
@@ -82,7 +91,6 @@ class LogRepository extends Repository {
 		}
 		
 		catch(PDOException $e) {
-			die($e->getMessage());
 			throw new DatabaseException('LOGINLOG_FETCH');
 		}
 	}
@@ -104,8 +112,30 @@ class LogRepository extends Repository {
 		
 		catch(PDOException $e)
 		{
-			die($e->getMessage());
 			throw new DatabaseException('ADMINLOG_INSERT');
 		}
 	}
+	
+	public function logPostDeletion($post) {
+		try
+		{
+			
+		$db = $this -> connection();
+		
+			$sql = "INSERT INTO " . self::$dbTableForum . " (" . self::$postId . ", " . self::$parentId . ", " . self::$title . ", " . self::$text . ", 
+			" . self::$author . ", " . self::$timePosted . ", " . self::$deletedBy . ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+			$params = array($post->getPostId(), $post->getParentId(), $post->getTitle(), $post->getText(), $post->getAuthor(), $post->getTimePosted(), $_SESSION['userID']);
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+			return true;
+		}
+		
+		catch(PDOException $e)
+		{
+			throw new DatabaseException('FORUMLOG_INSERT');
+		}
+	}
+		
 }

@@ -1,16 +1,19 @@
 <?php
 require_once("src/ForumRepository.php");
 require_once("src/UserRepository.php");
+require_once("src/LogRepository.php");
 require_once("src/Validation.php");
 
 class ForumModel {
 	private $forumRepository;
 	private $userRepository;
+	private $logRepository;
 	private $validation;
 	
 	public function __construct() {
 		$this->forumRepository = new ForumRepository();
 		$this->userRepository = new UserRepository();
+		$this->logRepository = new LogRepository();
 		$this->validation = new Validation();
 	}
 	
@@ -46,7 +49,11 @@ class ForumModel {
 	}
 	
 	public function deletePost($post) {
-		$this->forumRepository->deletePost($post);
+		if($this->logRepository->logPostDeletion($post)) {
+			$this->forumRepository->deletePost($post);
+			return true;
+		}
+		return false;	
 	}
 }
 
