@@ -44,6 +44,10 @@ class ForumModel {
 		$user = $this->userRepository->getUserById($id);
 		return $user;
 	}
+	
+	public function deletePost($post) {
+		$this->forumRepository->deletePost($post);
+	}
 }
 
 

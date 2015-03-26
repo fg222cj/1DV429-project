@@ -17,6 +17,19 @@ class ForumController {
 			header('location: ?login');
 		}
 		
+		if($this->forumView->getDelete() > 0) {
+			$post = $this->forumModel->getPostById($this->forumView->getDelete());
+			$postAuthor = $post->getAuthor();
+			
+			$currentUser = $this->forumModel->getUser($_SESSION["userID"]);
+			$currentUserRole = $currentUser->getRole();
+			
+			if($postAuthor == $_SESSION["userID"] || $currentUserRole == 2 || $currentUserRole == 1) {
+				$this->forumModel->deletePost($post);
+				$this->forumView->setMessage("Deleted post successfully");
+			}
+		}
+		
 		$post = $this->forumView->getPost();
 		if(isset($post)) {
 			try {
@@ -38,12 +51,16 @@ class ForumController {
 			
 		}
 		
+		
+		
 		if($this->forumView->getThread() > 0) {
 			return $this->forumView->showThread($this->forumView->getThread());
 		}
 		else {
 			return $this->forumView->showForum();
 		}
+		
+		
 	}
 	
 }

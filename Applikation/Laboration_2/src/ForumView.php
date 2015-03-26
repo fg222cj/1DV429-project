@@ -22,6 +22,13 @@ class ForumView {
 		return 0;
 	}
 	
+	public function getDelete() {
+		if(isset($_GET["delete"])) {
+			return $_GET["delete"];
+		}
+		return 0;
+	}
+	
 	public function getPost() {
 		if(isset($_POST["parentid"]) && isset($_POST["title"]) && isset($_POST["text"])
 		&& isset($_POST["author"])) {
@@ -85,7 +92,7 @@ class ForumView {
 		
 		$delete = "";
 		if($this->activeUser->getRole() <= 2 || $this->activeUser->getUserId() == $parentPost->getAuthor()) {
-			$delete = "<a href='?forum&thread='" . $parentId . "'&delete='" . $parentPost->getPostId() . "'>Delete this post</a>";
+			$delete = "<a href='?forum&thread=" . $parentId . "&delete=" . $parentPost->getPostId() . "'>Delete this post</a>";
 		}
 		
 		$user = $this->userRepository->getUserByID($parentPost->getAuthor());
@@ -102,7 +109,7 @@ class ForumView {
 			$commentUser = $this->userRepository->getUSerByID($post->getAuthor());
 			
 			if($this->activeUser->getRole() <= 2 || $this->activeUser->getUserId() == $post->getAuthor()) {
-				$delete = "<a href='?forum&thread='" . $parentId . "'&delete='" .$post->getPostId() . "'>Delete this post</a>";
+				$delete = "<a href='?forum&thread=" . $parentId . "&delete=" .$post->getPostId() . "'>Delete this post</a>";
 			}
 			$postsAsRows .= "
 			<tr>
