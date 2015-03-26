@@ -30,8 +30,7 @@ class ForumView {
 	}
 	
 	public function getPost() {
-		if(isset($_POST["parentid"]) && isset($_POST["title"]) && isset($_POST["text"])
-		&& isset($_POST["author"])) {
+		if(isset($_POST["parentid"]) && isset($_POST["title"]) && isset($_POST["text"])) {
 			$post = new Post(0, $_POST["parentid"], $_POST["title"], $_POST["text"], $_SESSION["userID"], null);
 			return $post;
 		}
@@ -69,11 +68,13 @@ class ForumView {
 		$forumForm = "
 		<form method='post' action=''><br>
 			<fieldset>
-				<input type='hidden' name='author' value='" . $_SESSION['userID'] . "'>
+			<legend>Create new post</legend>
 				<input type='hidden' name='parentid' value='0'>
-				<input type='text' name='title' maxlength='50'><br>
-				<textarea name='text' maxlength='1024'></textarea><br>
-				<input type='submit'>
+				<label for='title'>Title</label>
+				<input type='text' id='title' name='title' maxlength='50'><br>
+				<label for='text'>Text</label>
+				<textarea id='text' name='text' maxlength='1024'></textarea><br>
+				<input type='submit' class='small button'>
 			</fieldset>
 		</form>
 		";
@@ -128,11 +129,12 @@ class ForumView {
 		$forumForm = "
 		<form method='post' action=''><br>
 			<fieldset>
-				<input type='hidden' name='author' value='1'>
+				<legend>Reply</legend>
 				<input type='hidden' name='parentid' value='" . $this->getThread() . "'>
 				<input type='hidden' name='title' value='reply'><br>
-				<textarea name='text'></textarea><br>
-				<input type='submit'>
+				<label for='text'>Text</label>
+				<textarea id='text' name='text'></textarea><br>
+				<input type='submit' class='small button'>
 			</fieldset>
 		</form>
 		";

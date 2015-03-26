@@ -97,7 +97,7 @@ class ForumRepository extends Repository {
 			$db = $this -> connection();
 			
 			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$parentId . ", " . self::$title . ", " . self::$text . ", " . self::$author . ") VALUES (?, ?, ?, ?)";
-			$params = array($post -> getParentId(), $post -> getTitle(), $post -> getText(), $post -> getAuthor());
+			$params = array($post -> getParentId(), htmlspecialchars($post -> getTitle()), htmlspecialchars($post -> getText()), $post -> getAuthor());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);

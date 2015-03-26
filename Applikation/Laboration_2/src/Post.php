@@ -8,7 +8,7 @@
 		private $author;
 		private $timePosted;
 		
-		public function __construct($postId = 0, $parentId = 0, $title, $text, $author, $timePosted = null) {
+		public function __construct($postId = 0, $parentId, $title, $text, $author, $timePosted = null) {
 			$this->postId = $postId;
 			$this->parentId = $parentId;
 			$this->title = $title;

@@ -24,9 +24,29 @@ class ForumController {
 			$currentUser = $this->forumModel->getUser($_SESSION["userID"]);
 			$currentUserRole = $currentUser->getRole();
 			
-			if($postAuthor == $_SESSION["userID"] || $currentUserRole == 2 || $currentUserRole == 1) {
-				$this->forumModel->deletePost($post);
-				$this->forumView->setMessage("Deleted post successfully");
+			if($post->getParentId() > 0 && $post->getPostId() > 0) {
+				if($postAuthor == $_SESSION["userID"] || $currentUserRole == 2 || $currentUserRole == 1) {
+					$this->forumModel->deletePost($post);
+					$this->forumView->setMessage("Deleted post successfully");
+				}
+			} elseif($post->getPostId() > 0) {
+				if($currentUserRole == 2 || $currentUserRole == 1 || ($postAuthor == $_SESSION["userID"] && count($this->forumModel->getChildPosts($post->getPostID())) < 1)) {
+					$childPosts = $this->forumModel->getChildPosts($post->getPostId());
+					
+					foreach($childPosts as $childPost){
+						$this->forumModel->deletePost($childPost);
+					}
+					
+					$this->forumModel->deletePost($post);
+					$this->forumView->setMessage("Deleted post successfully");
+					return $this->forumView->showForum();
+				}
+				else {
+					$this->forumView->setMessage("Thread can't be deleted when there are replies");
+				}
+			}
+			else {
+				$this->forumView->setMessage("Post does not exist");
 			}
 		}
 		
@@ -50,17 +70,14 @@ class ForumController {
 			}
 			
 		}
-		
-		
-		
+	
 		if($this->forumView->getThread() > 0) {
-			return $this->forumView->showThread($this->forumView->getThread());
+			$post = $this->forumModel->getPostById($this->forumView->getThread());
+			if($post->getParentId() == 0 && $post->getPostId() > 0) {
+				return $this->forumView->showThread($this->forumView->getThread());
+			}
 		}
-		else {
-			return $this->forumView->showForum();
-		}
-		
-		
+		return $this->forumView->showForum();	
 	}
 	
 }

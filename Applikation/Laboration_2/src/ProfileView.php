@@ -13,7 +13,7 @@ class ProfileView {
 		$username = $_SESSION['username'];
 		$ret = "<h2>$username's profile</h2>
 		<form method='post'>
-		<input type='submit' name='editAccountSettings' value='Edit account settings'/>
+		<input type='submit' name='editAccountSettings' value='Edit account settings' class='small button'/>
 		</form>
 		";
 		return $ret;
@@ -33,8 +33,8 @@ class ProfileView {
 		<ul style='color:#FF0000'>$this->msg</ul>
 		Old password: <input type='password' name='oldPassword'><br>
 		New password: <input type='password' name='newPassword'><br>Repeat new password: 
-		<input type='password' name='repeatedNewPassword'><br>Skicka: 
-		<input type='submit' name='submitAccountSettings' value='Save'>
+		<input type='password' name='repeatedNewPassword'><br>
+		<input type='submit' name='submitAccountSettings' value='Save' class='small button'>
 		</fieldset>
 		</form>
 	    ";
