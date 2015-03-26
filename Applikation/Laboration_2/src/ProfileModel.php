@@ -13,7 +13,7 @@ class ProfileModel {
 	}
 	
 	public function changePassword($user, $newpassword){
-		$this->userRepository->changePassword($user, $newpassword);
+		$this->userRepository->changePassword($user, md5($newpassword));
 	}
 
 }
