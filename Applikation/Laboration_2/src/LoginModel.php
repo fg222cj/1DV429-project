@@ -1,9 +1,5 @@
 <?php
 
-//Är användaren inloggad?
-//Får användaren logga in?
-//Vem är inloggad?
-
 require_once("src/UserRepository.php");
 require_once("src/Exceptions.php");
 
@@ -21,9 +17,9 @@ class LoginModel {
 		$this->userRepository = new UserRepository();
 	}
 	
-	// Returnerar true om användaren redan är inloggad
+	// Returns true if already logged in
 	public function userLoggedInStatus(){
-	    // Kollar så ingen sessionsstöld har skett
+	    // Makes sure session has not been stolen
         if(isset($_SESSION[$this->browser])){
             if ($_SESSION[$this->browser] != $_SERVER["HTTP_USER_AGENT"]){
                 return false;
@@ -38,27 +34,26 @@ class LoginModel {
 		}
 	}
 	
-	// Förstör sessionen
+	// Destroys session
 	public function destroySession(){
 		session_unset();
         session_destroy();
 	}
 	
-	//Hämtar användarnamnet på personen inloggad i sessionen
+	//Fetches username from logged in user
 	public function getLoggedInUser(){
 		if(isset($_SESSION["username"])){
 			return $_SESSION["username"];
 		}
 	}
 	
-	// Loggar in
+	// Login
 	public function login($username, $password){
 		$_SESSION["username"] = $username;
 		
 		try {
 			$user = $this->userRepository->authenticateUser($username, md5($password));
 			if(isset($user)) {
-				// Kanske göra något mer med user? Annars bara returnera true från auth-funktionen kanske.
 				$_SESSION[$this->loggedIn] = 1;
 				$_SESSION["userID"] = $user->getUserId();
 		    	$_SESSION[$this->browser] = $_SERVER["HTTP_USER_AGENT"];
@@ -72,12 +67,11 @@ class LoginModel {
 	}
 	
 	public function addUser(User $user) {
-
-	try{
-		return $this->userRepository->addUser($user);
+		try{
+			return $this->userRepository->addUser($user);
 
 		} catch (\Exception $e) {
-			die("An error occured in the database!");
+			throw new DatabaseException("ADD_USER_ERROR");
 		}
 		
 	}

@@ -24,7 +24,7 @@ class LoginController {
 	
 	public function doControll($logout = null){
 			
-		// Om användaren vill logga ut
+		// If user wants to log out
 		if($logout == true) {
 			if($this->model->userLoggedInStatus()) {
 				$this->model->destroySession();
@@ -33,34 +33,38 @@ class LoginController {
 			return $this->view->showLoginForm();
 		}
 		
-		// Om användaren är inloggad redan		
+		// If user is already logged out		
 		if($this->model->userLoggedInStatus()){
 			$this->username = $this->model->getLoggedInUser();
 			return $this->view->showLoggedIn($this->username);
         }
 
-		// Om användaren vill logga in
+		// If user wants to log in
 		if($this->view->userPressedLogin()){
 			
-			// Hämtar inputvärdena från formuläret	
+			// Gets inputs from form
 			$this->username = $this->view->getUsername();
 			$this->password = $this->view->getPassword();
 			
-			// Kollar på användarnamn och lösenord är ifyllt
+			// Makes sure username and password
 			if($this->view->checkIfNotEmpty($this->username, $this->password)){
 				
 				$loginCheck = $this->logRepository->checkLoginAttempts($_SERVER['REMOTE_ADDR']);
 				if($loginCheck < 5){
-					// Försöker logga in med de angivna värdena
+					// Tries to log in with the input values
 					if($this->model->login($this->username, $this->password)){
-						// Meddelande om att inloggningen lyckades
+						// Success message
 						$this->view->loginSuccess();
 						$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 1);
-						$this->logRepository->addLoginLog($this->loginLog);
-						return $this->view->showLoggedIn($this->username);
+						if($this->logRepository->addLoginLog($this->loginLog)){
+							return $this->view->showLoggedIn($this->username);
+						}
+						else{
+							$this->view->setMsg("An error has occured!");
+						}
 					}	
 					
-					// Om uppgifterna var fel visas login-forumläret igen
+					// Shows login form again if login was not successful
 					else{
 						$this->view->errorMsg();
 						$this->loginLog = new LoginLog(null, $this->username, null, $_SERVER['REMOTE_ADDR'], 0);
@@ -76,7 +80,7 @@ class LoginController {
 		
 		}
 		
-		// Om användaren vill registrera ny användare
+		// If user wants to register a new user
 		if($this->view->userPressedRegister()){
 		    $this->username = $this->view->getRegUsername();
 		    $this->password = $this->view->getRegPassword();
@@ -86,20 +90,29 @@ class LoginController {
 		        if($this->view->checkRegisterInput($this->username, $this->password, $this->repeatedPassword)){
 		        	$user = new User(null, $this->username, md5($this->password));
 					//$this->view->setMsg($this->model->addUser($user));
-					if($this->model->addUser($user)){
-						$this->view->registerMsg(true);
-						return $this->view->showLoginForm();
-						
+					try{
+						if($this->model->addUser($user)){
+							$this->view->registerMsg(true);
+							return $this->view->showLoginForm();
+							
+						}
+						else{
+							$this->view->registerMsg(false);
+						}
 					}
-					else{
-						$this->view->registerMsg(false);
+					catch(DatabaseException $e){
+						switch ($e->getMessage()){
+							case "ADD_USER_ERROR":
+								$this->view->setMessage("Something went wrong, user could not be added!");
+								break;
+						}
 					}
     		    }
 		    }
 			return $this->view->showRegisterForm();
 		}
 		
-		// Visar annars login-formuläret som default
+		// Shows login form as default
 		return $this->view->showLoginForm();
 	}
 }

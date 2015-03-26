@@ -1,6 +1,6 @@
 <?php
-require_once('./src/LoginLog.php');
-require_once('./src/PasswordUpdateLog.php');
+require_once ('./src/LoginLog.php');
+require_once ('./src/PasswordUpdateLog.php');
 require_once ('src/AdminLog.php');
 require_once ('src/Post.php');
 require_once ('./src/Repository.php');
@@ -27,7 +27,6 @@ class LogRepository extends Repository {
 	private static $deletedBy = "deletedby";
 	private static $timeDeleted = "timedeleted";
 	
-	
 	private static $dbTableLogin = 'loginlog';
 	private static $dbTableAdmin = "adminlog";
 	private static $dbTablePassword = 'passwordupdatelog';
@@ -35,9 +34,7 @@ class LogRepository extends Repository {
 	
 
 	public function addLoginLog($loginLog) {
-		try
-		{
-			
+		try {	
 		$db = $this -> connection();
 		
 			$sql = "INSERT INTO " . self::$dbTableLogin . " (" . self::$username . ", " . self::$IP . ", " . self::$success . ") VALUES (?, ?, ?)";
@@ -49,8 +46,7 @@ class LogRepository extends Repository {
 			return true;
 		}
 		
-		catch(PDOException $e)
-		{
+		catch(PDOException $e) {
 			throw new DatabaseException('LOGINLOG_INSERT');
 		}
 	}
@@ -71,7 +67,7 @@ class LogRepository extends Repository {
 		
 		catch(PDOException $e)
 		{
-			throw new DatabaseException('LOGINLOG_INSERT');
+			throw new DatabaseException('PASSWORDLOG_INSERT');
 		}
 	}
 	

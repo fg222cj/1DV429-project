@@ -1,7 +1,5 @@
 <?php
 
-//Visualisera data
-//Behöver tillgång till datan som den ska visualisera från modellen
 require_once('src/Validation.php');
 
 class LoginView {
@@ -18,11 +16,11 @@ class LoginView {
 		$this->validation = new Validation();
 	}
 	
-	//Visar login-formuläret om ej redan inloggad
+	//Shows login form if not already logged in
 	public function showLoginForm(){
 		$ret = "";
 		
-		// Sparar användarnamnet till inputfältet om lösenordet är fel
+		// Saves username to input if pw is wrong
         if (isset($_POST["username"])){
             $this->username = $_POST["username"];
 		}
@@ -50,26 +48,26 @@ class LoginView {
 	    }
 	    
 	    $ret = "
-	    <a href='?'>Back</a>
-	    <h2>Register user</h2>
-	    <form method='post'>
-		<fieldset>
-		<legend>Register new user - Type username and password</legend>
-		$this->msg
-		Username: 
-		<input type='text' name='regUsername' id='username' value='$this->username'>
-		Password: 
-		<input type='password' name='regPassword'>
-		Repeat password: 
-		<input type='password' name='repeatedRegPassword'> 
-		<input type='submit' class='small button' name='regSubmit' value='Register'>
-		</fieldset>
-		</form>";
+		    <a href='?'>Back</a>
+		    <h2>Register user</h2>
+		    <form method='post'>
+			<fieldset>
+			<legend>Register new user - Type username and password</legend>
+			$this->msg
+			Username: 
+			<input type='text' name='regUsername' id='username' value='$this->username'>
+			Password: 
+			<input type='password' name='regPassword'>
+			Repeat password: 
+			<input type='password' name='repeatedRegPassword'> 
+			<input type='submit' class='small button' name='regSubmit' value='Register'>
+			</fieldset>
+			</form>";
 	    
 	    return $ret;
 	}
 		
-	// Visas om inloggad
+	// Shown if logged in
 	public function showLoggedIn($username){
 				
 		$username = strtolower($username);
@@ -79,7 +77,7 @@ class LoginView {
 		return $ret;
 	}
 	
-	// Kollar så användaren matat in något i båda fälten
+	// Makes sure input fields are not empty
 	public function checkIfNotEmpty($username, $password){
 		if(strlen($username) == 0 || strlen($password) == 0){
 			
@@ -145,7 +143,6 @@ class LoginView {
 		return true;
 	}
 
-	// Returnerar true om användaren klickar på 'Logga in'.
 	public function userPressedLogin(){
         if(isset($_POST["submit"])){
             return true;
@@ -153,7 +150,6 @@ class LoginView {
         return false;
     }
 
-	// Returnerar true om användaren klickar på 'Logga ut'
 	public function logOut(){
 		    $this->msg = "<p>You now logged out</p>";
 	}
@@ -172,14 +168,12 @@ class LoginView {
 	    return false;
 	}
 	
-	// Returnerar användarnamnet som matats in
 	public function getUsername(){
 		if(isset($_POST["username"])){
 			return $_POST["username"];
 		}
 	}
 	
-	// Returnerar lösenordet som matats in
 	public function getPassword(){
 		if(isset($_POST["password"])){
 			return $_POST["password"];
@@ -205,7 +199,6 @@ class LoginView {
 		return "";
 	}
 	
-	// Olika statusmeddelanden
 	public function errorMsg(){
 		$this->msg = "<p>Wrong username or password</p>";
 	}
