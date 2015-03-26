@@ -138,9 +138,6 @@ class UserRepository extends Repository {
 			else {
 				return false;
 			}
-			// Fetch the added user and return it. Remove these rows if we end up not needing them.
-			//$user = $this->getUserByID($userId);
-			//return $user;
 		}
 		
 		catch(PDOException $e)

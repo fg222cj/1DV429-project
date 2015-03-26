@@ -41,9 +41,6 @@ class Validation{
 		
 		// Makes sure password contains both uppercase & lowercase letters, and at least one numeric character.
 		public function validatePasswordSecurity($password){
-			// if (!preg_match('/[A-Z][a-z]/', $password) || !preg_match('/[0-9]/', $password)){
-			    // throw new ValidationException("PASSWORD_NOT_SECURE");
-			// }
 			if(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/', $password) || !ctype_alnum($password)){
 				throw new ValidationException("PASSWORD_NOT_SECURE");
 			}
