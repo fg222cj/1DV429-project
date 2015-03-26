@@ -99,8 +99,8 @@ class ProfileController {
 				if($exceptionThrown == false){
 					$this->passwordUpdateLog = new PasswordUpdateLog(null, $_SESSION["userID"], null, $_SERVER['REMOTE_ADDR']);
 					$this->logRepository->addPasswordUpdateLog($this->passwordUpdateLog);
-					$this->loginController->doControll(true);
-					$this->loginView->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
+					// $this->loginController->doControll(true);
+					$this->view->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
 					return $this->view->showEditAccountSettingsForm();
 				}
 				else{
