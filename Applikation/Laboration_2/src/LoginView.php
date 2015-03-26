@@ -143,37 +143,6 @@ class LoginView {
 				return false;
 			}
 		return true;
-		
-/*	    $updatedUsername = "";
-	    if(!ctype_alnum($username)){
-	    	$length = strlen($username);
-	    	$array = array();
-	    	for($i = 0; $i < $length; $i++){
-	    		if(ctype_alnum($username[$i])){
-	    			$updatedUsername .= $username[$i];	
-	    		}
-	    	}
-			$_POST["regUsername"] = $updatedUsername;
-	    	$this->msg = "<p>Användarnamnet innehåller ogiltiga tecken</p>";
-			return false;
-	    }
-		
-	    if(strlen($username) < 3 || strlen($password) < 6 || strlen($repeatedPassword) < 6  || $password != $repeatedPassword){
-    	    if(strlen($username) < 3){
-    	        $this->msg = "<p>Användarnamnet har för få tecken. Minst 3 tecken</p>";
-    	    }
-    	    
-    	    if(strlen($password) < 6 || strlen($repeatedPassword) < 6){
-    	        $this->msg .= "<p>Lösenorden har för få tecken. Minst 6 tecken</p>";
-    	    }
-    	    
-    	    if($password != $repeatedPassword){
-    	    	$this->msg .= "<p>Lösenorden stämmer inte överrens</p>";
-    	    }
-    	    return false;
-	    }
-	    
-	    return true;  */
 	}
 
 	// Returnerar true om användaren klickar på 'Logga in'.
