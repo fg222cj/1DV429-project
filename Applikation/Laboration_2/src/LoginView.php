@@ -96,8 +96,7 @@ class LoginView {
 	}
 	
 	public function checkRegisterInput($username, $password, $repeatedPassword){
-		echo $username;
-		
+	
 		$exceptionThrown = false;
 			
 			try{					
@@ -118,63 +117,32 @@ class LoginView {
 				$exceptionThrown = true;
 				switch ($e->getMessage()){										
 					case "VARIABLE_NOT_STRING":
-						$this->msg .= "<p>Invalid input!</p>";
+						$this->msg .= "<p><font color='#FF0000'>Invalid input!</font></p>";
 						break;
 						
 					case "USERNAME_BAD_LENGTH":
-						$this->msg .= "<p>Username needs to be in the range of 3-15 characters</p>";
+						$this->msg .= "<p><font color='#FF0000'>Username needs to be in the range of 3-15 characters</font></p>";
 						break;
 					
 					case "USERNAME_BAD_CHARACTERS":
-						$this->msg .= "<p>Username contains invalid characters.</p>";
+						$this->msg .= "<p><font color='#FF0000'>Username contains invalid characters.</font></p>";
 						break;
 
 					case "PASSWORD_BAD_LENGTH":
-						$this->msg .= "<p>Password needs to be in the range of 8-15 characters</p>";
+						$this->msg .= "<p><font color='#FF0000'>Password needs to be in the range of 8-15 characters.</font></p>";
 						break;
 						
 					case "PASSWORD_NOT_SECURE":
-						$this->msg .= "<p>Password needs at least one upper case letter, one lower case letter and one numeric character.</p>";
+						$this->msg .= "<p><font color='#FF0000'>Password needs at least one upper case letter, one lower case letter and one numeric character.</font></p>";
 						break;
 						
 					case "NEW_PASSWORDS_NOT_MATCHING":
-						$this->msg .= "<p>The passwords are not matching!</p>";
+						$this->msg .= "<p><font color='#FF0000'>The passwords are not matching!</font></p>";
 						break;
 				}
 				return false;
 			}
 		return true;
-		
-/*	    $updatedUsername = "";
-	    if(!ctype_alnum($username)){
-	    	$length = strlen($username);
-	    	$array = array();
-	    	for($i = 0; $i < $length; $i++){
-	    		if(ctype_alnum($username[$i])){
-	    			$updatedUsername .= $username[$i];	
-	    		}
-	    	}
-			$_POST["regUsername"] = $updatedUsername;
-	    	$this->msg = "<p>Användarnamnet innehåller ogiltiga tecken</p>";
-			return false;
-	    }
-		
-	    if(strlen($username) < 3 || strlen($password) < 6 || strlen($repeatedPassword) < 6  || $password != $repeatedPassword){
-    	    if(strlen($username) < 3){
-    	        $this->msg = "<p>Användarnamnet har för få tecken. Minst 3 tecken</p>";
-    	    }
-    	    
-    	    if(strlen($password) < 6 || strlen($repeatedPassword) < 6){
-    	        $this->msg .= "<p>Lösenorden har för få tecken. Minst 6 tecken</p>";
-    	    }
-    	    
-    	    if($password != $repeatedPassword){
-    	    	$this->msg .= "<p>Lösenorden stämmer inte överrens</p>";
-    	    }
-    	    return false;
-	    }
-	    
-	    return true;  */
 	}
 
 	// Returnerar true om användaren klickar på 'Logga in'.

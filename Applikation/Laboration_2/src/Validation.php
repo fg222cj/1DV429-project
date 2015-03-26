@@ -41,8 +41,11 @@ class Validation{
 		
 		// Makes sure password contains both uppercase & lowercase letters, and at least one numeric character.
 		public function validatePasswordSecurity($password){
-			if (!preg_match('/[A-Z][a-z]/', $password) || !preg_match('/[0-9]/', $password)){
-			    throw new ValidationException("PASSWORD_NOT_SECURE");
+			// if (!preg_match('/[A-Z][a-z]/', $password) || !preg_match('/[0-9]/', $password)){
+			    // throw new ValidationException("PASSWORD_NOT_SECURE");
+			// }
+			if(!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).*$/', $password)){
+				throw new ValidationException("PASSWORD_NOT_SECURE");
 			}
 		}
 		
@@ -84,7 +87,6 @@ class Validation{
 		}
 	
 		public function verifyPassword($password){
-		
 		try {
 			$user = $this->userRepository->authenticateUser($_SESSION['username'], $password);
 			if(isset($user)) {
@@ -94,7 +96,6 @@ class Validation{
 		catch(AuthenticationException $e) {
 			throw new ValidationException("INVALID_PASSWORD");
 		}
-		
 	}
 }
 ?>

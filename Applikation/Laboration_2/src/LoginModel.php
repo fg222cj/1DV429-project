@@ -77,7 +77,6 @@ class LoginModel {
 		return $this->userRepository->addUser($user);
 
 		} catch (\Exception $e) {
-			echo $e;
 			die("An error occured in the database!");
 		}
 		

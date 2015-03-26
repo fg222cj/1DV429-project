@@ -29,18 +29,23 @@ class AdminController
 				$Id = $this->AdminView->getId();
 				$role = $this->AdminView->getRole();
 				
+				$admin = $this->AdminModel->getUser($_SESSION["userID"]);
+				$adminRole = $admin->getRole();
+				
 				$user = $this->AdminModel->getUser($this->AdminView->getId());
 				$oldRole = $user->getRole();
-			
-				if($this->AdminModel->changeRole($role, $Id)) {
-					$this->adminLog = new AdminLog(null, $_SESSION["userID"], $this->AdminView->getId(), $oldRole, $this->AdminView->getRole(), null);
-					$this->logRepository->addAdminLog($this->adminLog);
-					
-					$this->AdminView->setMsg("Update of user role succeeded");
-					return $this->AdminView->ShowRoleList();
-				} else {
-					$this->AdminView->setMsg("Something went wrong when tried to update a user role");
-					return $this->AdminView->ShowRoleList();
+				
+				if($adminRole == 1) {
+					if($this->AdminModel->changeRole($role, $Id)) {
+						$this->adminLog = new AdminLog(null, $_SESSION["userID"], $this->AdminView->getId(), $oldRole, $this->AdminView->getRole(), null);
+						$this->logRepository->addAdminLog($this->adminLog);
+						
+						$this->AdminView->setMsg("Update of user role succeeded");
+						return $this->AdminView->ShowRoleList();
+					} else {
+						$this->AdminView->setMsg("Something went wrong when tried to update a user role");
+						return $this->AdminView->ShowRoleList();
+					}
 				}
 			} catch(exception $e) {
 				die($e->getMessage());
