@@ -19,7 +19,7 @@ class AdminController
 		$this->logRepository = new LogRepository();
 	}
 	
-	// Visar admin sida där man kan ändra roller.
+	//Show admin site and there you can change roles.
 	public function AdminControl()
 	{
 		
@@ -48,8 +48,7 @@ class AdminController
 					}
 				}
 			} catch(exception $e) {
-				die($e->getMessage());
-				//$this->AdminView->setMsg("Something went wrong when tried to update a user role");
+				$this->AdminView->setMsg("Something went wrong when tried to update a user role");
 				return $this->AdminView->ShowRoleList();
 			}
 		}

@@ -4,19 +4,19 @@ class NavigationView
 {
 	public static $actionProfile = 'profile';
 	public static $actionAdmin = 'admin';
-	public static $actionAddUser = 'adduser';
 	public static $actionLogin = 'login';
 	public static $actionLogout = "logout";
 	public static $actionForum = "forum";
 	
+	//Check the url and return static string.
 	public static function getAction()
 	{
-		if(isset($_REQUEST[self::$actionProfile]) && !isset($_REQUEST[self::$actionAdmin]) && !isset($_REQUEST[self::$actionAddUser]) && !isset($_REQUEST[self::$actionLogin]))
+		if(isset($_REQUEST[self::$actionProfile]))
 		{
 			return self::$actionProfile;
 		}
 		
-		if(isset($_REQUEST[self::$actionAdmin]) && !isset($_REQUEST[self::$actionProfile]) && !isset($_REQUEST[self::$actionAddUser]) && !isset($_REQUEST[self::$actionLogin]))
+		if(isset($_REQUEST[self::$actionAdmin]))
 		{
 			return self::$actionAdmin;
 		}

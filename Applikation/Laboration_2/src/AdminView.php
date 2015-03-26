@@ -1,7 +1,6 @@
 <?php
 
 require_once ("src/Validation.php");
-require_once ("src/Exceptions.php");
 
 Class AdminView
 {
@@ -16,7 +15,7 @@ Class AdminView
 		$this->validation = new Validation();
 	}
 	
-	// Visar den kompakta listan. Returnerar HTML-sträng.
+	//Show the role list. Return HTML
 	public function ShowRoleList()
 	{
 		$AllUserAndRoles = $this->AdminModel->getList();
@@ -66,7 +65,7 @@ Class AdminView
 		return $ret;
 	}
 	
-	// Returnerar true om användaren klickar på 'Update'.
+	//Return true if user clicked Update.
 	public function userPressedUpdate(){
         if(isset($_POST["submit"])){
             return true;
@@ -74,6 +73,7 @@ Class AdminView
         return false;
     }
     
+	//Get the role you want change.
     public function getRole() {
     	$role = $_POST["role"];
     	
@@ -85,6 +85,7 @@ Class AdminView
 		return false;
     }
 	
+	//Get userid of the person you want change.
 	public function getId() {
     	if(isset($_POST["user"])) {
     		return $_POST["user"];
