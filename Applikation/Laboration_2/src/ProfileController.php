@@ -32,7 +32,7 @@ class ProfileController {
 		// Check if user wants to save their account settings changes.
 		if($this->view->userPressedSubmitAccountSettings()){
 			// Retrieve inputs from input fields.
-			$this->oldPasswordInput = $this->view->getOldPasswordInput();
+			$this->oldPasswordInput = md5($this->view->getOldPasswordInput());
 			$this->newPasswordFirstInput = $this->view->getNewPasswordFirstInput();
 			$this->newPasswordSecondInput = $this->view->getNewPasswordSecondInput();
 			
@@ -92,7 +92,6 @@ class ProfileController {
 				
 				if($exceptionThrown == false){
 					$this->passwordUpdateLog = new PasswordUpdateLog(null, $_SESSION["userID"], null, $_SERVER['REMOTE_ADDR']);
-					print_r($this->passwordUpdateLog);
 					$this->logRepository->addPasswordUpdateLog($this->passwordUpdateLog);
 					$this->view->setMessage("<font color='#04C90B'>New password was successully saved!</font>");
 					return $this->view->showEditAccountSettingsForm();
