@@ -32,7 +32,7 @@ class LoginView {
 			<fieldset>
 			<legend>Login - Type username and password</legend>
 			$this->msg
-			Username: <input type='text' name='username' maxlength='30' id='username' value='$this->username'>
+			Username: <input type='text' name='username' maxlength='30' id='username' value='". htmlspecialchars($this->username) . "'>
 			Password: <input type='password' name='password' maxlength='30'>
 			<input type='submit' class='small button' name='submit' value='Log in'>
 			</fieldset>
@@ -55,7 +55,7 @@ class LoginView {
 			<legend>Register new user - Type username and password</legend>
 			$this->msg
 			Username: 
-			<input type='text' name='regUsername' id='username' maxlength='30' value='$this->username'>
+			<input type='text' name='regUsername' id='username' maxlength='30' value='". htmlspecialchars($this->username) . "'>
 			<p>Password need to have at least 8 characters, at least one upper-case letter and one lowercase letter, at least one digit and no special characters</p>
 			Password: 
 			<input type='password' name='regPassword' maxlength='30'>
@@ -125,7 +125,6 @@ class LoginView {
 					
 					case "USERNAME_BAD_CHARACTERS":
 						$this->msg .= "<p><font color='#FF0000'>Username contains invalid characters.</font></p>";
-						$this->username = "";
 						break;
 
 					case "PASSWORD_BAD_LENGTH":
