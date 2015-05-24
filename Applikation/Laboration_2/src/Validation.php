@@ -27,7 +27,7 @@ class Validation{
 		
 		// Makes sure username only contains alphabetic and numeric characters.
 		public function validateUsernameCharacters($username){
-			if(!ctype_alnum($username)){
+			if(!ctype_alnum($username) || htmlspecialchars($username) != $username){
 				throw new ValidationException("USERNAME_BAD_CHARACTERS");
 			}
 		}

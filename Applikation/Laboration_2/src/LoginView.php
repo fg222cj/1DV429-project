@@ -125,6 +125,7 @@ class LoginView {
 					
 					case "USERNAME_BAD_CHARACTERS":
 						$this->msg .= "<p><font color='#FF0000'>Username contains invalid characters.</font></p>";
+						$this->username = "";
 						break;
 
 					case "PASSWORD_BAD_LENGTH":
