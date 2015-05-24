@@ -132,7 +132,7 @@ class ForumView {
 				<input type='hidden' name='parentid' value='" . $this->getThread() . "'>
 				<input type='hidden' name='title' value='reply'><br>
 				<label for='text'>Text</label>
-				<textarea id='text' name='text'></textarea><br>
+				<textarea id='text' name='text' maxlength='1024'></textarea><br>
 				<input type='submit' class='small button'>
 			</fieldset>
 		</form>
