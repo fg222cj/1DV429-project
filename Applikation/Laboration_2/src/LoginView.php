@@ -32,8 +32,8 @@ class LoginView {
 			<fieldset>
 			<legend>Login - Type username and password</legend>
 			$this->msg
-			Username: <input type='text' name='username' id='username' value='$this->username'>
-			Password: <input type='password' name='password'>
+			Username: <input type='text' name='username' maxlength='30' id='username' value='$this->username'>
+			Password: <input type='password' name='password' maxlength='30'>
 			<input type='submit' class='small button' name='submit' value='Log in'>
 			</fieldset>
 			</form>";
@@ -55,12 +55,12 @@ class LoginView {
 			<legend>Register new user - Type username and password</legend>
 			$this->msg
 			Username: 
-			<input type='text' name='regUsername' id='username' value='$this->username'>
+			<input type='text' name='regUsername' id='username' maxlength='30' value='$this->username'>
 			<p>Password need to have at least 8 characters, at least one upper-case letter and one lowercase letter, at least one digit and no special characters</p>
 			Password: 
-			<input type='password' name='regPassword'>
+			<input type='password' name='regPassword' maxlength='30'>
 			Repeat password: 
-			<input type='password' name='repeatedRegPassword'> 
+			<input type='password' name='repeatedRegPassword' maxlength='30'> 
 			<input type='submit' class='small button' name='regSubmit' value='Register'>
 			</fieldset>
 			</form>";
